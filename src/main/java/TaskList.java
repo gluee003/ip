@@ -20,6 +20,38 @@ public class TaskList {
         this.tasks.add(task);
     }
 
+    /**
+     * Marks a task as completed.
+     *
+     * @param position 1-indexed position of task to be marked.
+     * @return Task that was marked.
+     */
+    public Task markTask(int position) {
+        if (position < 1 || position > this.tasks.size()) {
+            return null;
+        }
+        Task task = this.tasks.get(position - 1);
+        task.mark();
+
+        return task;
+    }
+
+    /**
+     * Unmarks a task as complete.
+     *
+     * @param position 1-indexed position of task to be unmarked.
+     * @return Task that was unmarked.
+     */
+    public Task unmarkTask(int position) {
+        if (position < 1 || position > this.tasks.size()) {
+            return null;
+        }
+        Task task = this.tasks.get(position - 1);
+        task.unmark();
+
+        return task;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
