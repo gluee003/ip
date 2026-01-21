@@ -9,14 +9,20 @@ public class Bru {
 
         Scanner scanner = new Scanner(System.in);
         boolean isChatting = true;
+        TaskList taskList = new TaskList();
         while (isChatting) {
             String input = scanner.nextLine();
             switch (input) {
             case "bye":
                 isChatting = false;
                 break;
+            case "list":
+                System.out.println(taskList);
+                break;
             default:
-                System.out.println(input + "\n");
+                Task task = new Task(input);
+                taskList.addTask(task);
+                System.out.println(String.format("added: %s", task));
                 break;
             }
         }
