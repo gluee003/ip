@@ -38,10 +38,6 @@ public class Bru {
         System.out.println("What can I do for you?\n");
     }
 
-    private static void displayUnknownMsg() {
-        System.out.println("Bruh, I don't know what that means.");
-    }
-
     private static void displayGoodbyeMsg() {
         System.out.println("See you next time bruh.");
     }
@@ -51,23 +47,29 @@ public class Bru {
     }
 
     private static void markTask(String[] parms, boolean mark) {
+        if (parms.length == 0) {
+            throw new EmptyParmsException(String.join(" ", parms));
+        }
         String markedMsg = "Nice! I've marked this task as done:";
         String unmarkedMsg = "OK, I've marked this task as not done yet:";
         String value = String.join(" ", parms);
-        int position = Integer.valueOf(value);
-        Task task = mark ? Bru.taskList.markTask(position) : Bru.taskList.unmarkTask(position);
+        try {
+            int position = Integer.valueOf(value);
+            Task task = mark ? Bru.taskList.markTask(position) : Bru.taskList.unmarkTask(position);
 
-        if (task == null) {
-            System.out.println("Sorry, the task was not found.");
-            return;
-        }
+            if (task == null) {
+                throw new TaskNotFoundException(value);
+            }
 
-        if (mark) {
-            System.out.println(markedMsg);
-        } else {
-            System.out.println(unmarkedMsg);
+            if (mark) {
+                System.out.println(markedMsg);
+            } else {
+                System.out.println(unmarkedMsg);
+            }
+            System.out.println(task);
+        } catch (NumberFormatException e) {
+            throw new InvalidParmsException(value);
         }
-        System.out.println(task);
     }
 
     private static void addTask(Task task) {
@@ -77,13 +79,23 @@ public class Bru {
     }
 
     private static void addTodoTask(String[] parms) {
+        if (parms.length == 0) {
+            throw new EmptyParmsException(String.join(" ", parms));
+        }
         String msg = String.join(" ", parms);
         Task task = new TodoTask(msg);
         Bru.addTask(task);
     }
 
     private static void addDeadlineTask(String[] parms) {
+        if (parms.length == 0) {
+            throw new EmptyParmsException(String.join(" ", parms));
+        }
         int delimiterPosition = Utils.findInArr(parms, "/by");
+        if (delimiterPosition == -1 || delimiterPosition == 0
+                || delimiterPosition == parms.length - 1) {
+            throw new InvalidParmsException(String.join(" ",parms));
+        }
         String msg = String.join(" ",
                 Arrays.copyOfRange(parms, 0,delimiterPosition));
         String deadline = String.join(" ",
@@ -93,8 +105,17 @@ public class Bru {
     }
 
     private static void addEventTask(String[] parms) {
+        if (parms.length == 0) {
+            throw new EmptyParmsException(String.join(" ", parms));
+        }
         int startPosition = Utils.findInArr(parms, "/from");
         int endPosition = Utils.findInArr(parms, "/to");
+        if (startPosition == -1 || endPosition == -1 || startPosition >= endPosition
+                || startPosition == 0 || startPosition == parms.length - 1
+                || endPosition == 0 || endPosition == parms.length - 1
+                || startPosition + 1 == endPosition) {
+            throw new InvalidParmsException(String.join(" ",parms));
+        }
         String msg = String.join(" ",
                 Arrays.copyOfRange(parms, 0,startPosition));
         String start = String.join(" ",
@@ -115,31 +136,34 @@ public class Bru {
             Pair<Command, String[]> pair = Bru.parseInput(input);
             Command command = pair.getFirst();
             String[] parms = pair.getSecond();
-
-            switch (command) {
-            case BYE:
-                isChatting = false;
-                break;
-            case LIST:
-                Bru.displayTaskList();
-                break;
-            case MARK:
-                Bru.markTask(parms, true);
-                break;
-            case UNMARK:
-                Bru.markTask(parms, false);
-                break;
-            case TODO:
-                Bru.addTodoTask(parms);
-                break;
-            case DEADLINE:
-                Bru.addDeadlineTask(parms);
-                break;
-            case EVENT:
-                Bru.addEventTask(parms);
-                break;
-            default:
-                Bru.displayUnknownMsg();
+            try {
+                switch (command) {
+                case BYE:
+                    isChatting = false;
+                    break;
+                case LIST:
+                    Bru.displayTaskList();
+                    break;
+                case MARK:
+                    Bru.markTask(parms, true);
+                    break;
+                case UNMARK:
+                    Bru.markTask(parms, false);
+                    break;
+                case TODO:
+                    Bru.addTodoTask(parms);
+                    break;
+                case DEADLINE:
+                    Bru.addDeadlineTask(parms);
+                    break;
+                case EVENT:
+                    Bru.addEventTask(parms);
+                    break;
+                default:
+                    throw new UnknownCommandException(input);
+                }
+            } catch (BruException e) {
+                System.out.println(e.getDisplayMessage(command.toString()));
             }
         }
 

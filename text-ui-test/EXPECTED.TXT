@@ -34,4 +34,21 @@ OK, I've marked this task as not done yet:
 2. [D][ ] return book (by: Sunday)
 3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
 
+Bruh... the task to mark could not be found.
+Bruh... the task to unmark could not be found.
+Bruh... the description of mark cannot be empty.
+Bruh... the description of unmark cannot be empty.
+Bruh... the description of todo cannot be empty.
+Bruh... the description of deadline cannot be empty.
+Bruh... the description of event cannot be empty.
+Bruh... the description of deadline is invalid.
+Bruh... the description of deadline is invalid.
+Bruh... the description of deadline is invalid.
+Bruh... the description of event is invalid.
+Bruh... the description of event is invalid.
+Bruh... the description of event is invalid.
+Bruh... the description of event is invalid.
+Bruh... the description of event is invalid.
+Bruh... the description of event is invalid.
+Bruh... I don't know what you mean.
 See you next time bruh.

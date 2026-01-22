@@ -10,4 +10,21 @@ unmark 1
 list
 unmark 2
 list
+mark 0
+unmark 10
+mark
+unmark
+todo
+deadline
+event
+deadline assignment Sunday
+deadline assignment /by
+deadline /by Sunday
+event lecture /from /to 4pm
+event lecture /from 2pm /to
+event /from 2pm /to 4pm
+event lecture /to 4pm /from 2pm
+event lecture /from 4pm
+event lecture /to 2pm
+asdfasjfajlkfafla
 bye
