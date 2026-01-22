@@ -1,9 +1,24 @@
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Bru {
     public static final String NAME = "Bru";
+    private static final Pattern MARK_PATTERN = Pattern.compile("mark [0-9]+");
+    private static final Pattern UNMARK_PATTERN = Pattern.compile("unmark [0-9]+");
+
+    private static Command parseInput(String input) {
+        if (input.equals("bye")) {
+            return Command.BYE;
+        } else if (input.equals("list")) {
+            return Command.LIST;
+        } else if (Bru.MARK_PATTERN.matcher(input).matches()) {
+            return Command.MARK;
+        } else if (Bru.UNMARK_PATTERN.matcher(input).matches()) {
+            return Command.UNMARK;
+        } else {
+            return Command.ADD;
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println("Hello! I'm " + Bru.NAME);
@@ -12,39 +27,45 @@ public class Bru {
         Scanner scanner = new Scanner(System.in);
         boolean isChatting = true;
         TaskList taskList = new TaskList();
-        Pattern markPattern = Pattern.compile("mark [0-9]+");
-        Pattern unmarkPattern = Pattern.compile("unmark [0-9]+");
 
         while (isChatting) {
             String input = scanner.nextLine();
-            if (input.equals("bye")) {                          // bye
+
+            switch (Bru.parseInput(input)) {
+            case BYE:
                 isChatting = false;
-            } else if (input.equals("list")) {                  // list
+                break;
+            case LIST:
                 System.out.println(taskList);
-            } else if (markPattern.matcher(input).matches()) {  // mark
+                break;
+            case MARK: {
                 String value = input.split(" ")[1];
                 int position = Integer.valueOf(value);
-                Task task = taskList.markTask(position);
-                if (task != null) {
+                Task markedTask = taskList.markTask(position);
+                if (markedTask != null) {
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(task);
+                    System.out.println(markedTask);
                 } else {
                     System.out.println("Sorry, the task was not found.");
                 }
-            } else if (unmarkPattern.matcher(input).matches()) { // unmark
+                break;
+            }
+            case UNMARK: {
                 String value = input.split(" ")[1];
                 int position = Integer.valueOf(value);
-                Task task = taskList.unmarkTask(position);
-                if (task != null) {
+                Task unmarkedTask = taskList.unmarkTask(position);
+                if (unmarkedTask != null) {
                     System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println(task);
+                    System.out.println(unmarkedTask);
                 } else {
                     System.out.println("Sorry, the task was not found.");
                 }
-            } else {                                            // add
-                Task task = new Task(input);
-                taskList.addTask(task);
-                System.out.println(String.format("added: %s", task));
+                break;
+            }
+            case ADD:
+                Task newTask = new Task(input);
+                taskList.addTask(newTask);
+                System.out.println(String.format("added: %s", newTask));
             }
         }
 
