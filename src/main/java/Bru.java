@@ -28,6 +28,8 @@ public class Bru {
             command = Command.DEADLINE;
         } else if (cmd.equals("event")) {
             command = Command.EVENT;
+        } else if (cmd.equals("delete")) {
+            command = Command.DELETE;
         }
 
         return new Pair<>(command, parms);
@@ -126,6 +128,26 @@ public class Bru {
         Bru.addTask(task);
     }
 
+    private static void deleteTask(String[] parms) {
+        if (parms.length == 0) {
+            throw new EmptyParmsException(String.join(" ", parms));
+        }
+        String value = String.join(" ", parms);
+        try {
+            int position = Integer.valueOf(value);
+            Task task = Bru.taskList.deleteTask(position);
+
+            if (task == null) {
+                throw new TaskNotFoundException(value);
+            }
+
+            System.out.println(String.format("Noted. I've removed this task: %s", task));
+            System.out.println(String.format("Now you have %d tasks in the list.", Bru.taskList.size()));
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            throw new InvalidParmsException(value);
+        }
+    }
+
     public static void main(String[] args) {
         Bru.displayWelcomeMsg();
         Scanner scanner = new Scanner(System.in);
@@ -158,6 +180,9 @@ public class Bru {
                     break;
                 case EVENT:
                     Bru.addEventTask(parms);
+                    break;
+                case DELETE:
+                    Bru.deleteTask(parms);
                     break;
                 default:
                     throw new UnknownCommandException(input);

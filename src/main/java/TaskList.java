@@ -25,6 +25,19 @@ public class TaskList {
     }
 
     /**
+     * Removes a task from the task list.
+     *
+     * @param position 1-indexed position of task to be removed
+     * @return Task that was removed
+     * @throws IndexOutOfBoundsException
+     */
+    public Task deleteTask(int position) throws IndexOutOfBoundsException {
+        Task task = this.tasks.get(position - 1);
+        this.tasks.remove(position - 1);
+        return task;
+    }
+
+    /**
      * Marks a task as completed.
      *
      * @param position 1-indexed position of task to be marked.

@@ -10,13 +10,17 @@ unmark 1
 list
 unmark 2
 list
+delete 1
+list
 mark 0
 unmark 10
-mark
-unmark
 todo
 deadline
 event
+delete
+mark zuckerberg
+unmark zuckerburger
+delete 6 7
 deadline assignment Sunday
 deadline assignment /by
 deadline /by Sunday
