@@ -1,12 +1,9 @@
-import java.util.function.Supplier;
-
 /**
  * The Task class encapsulates the state of a task.
  */
-public class Task {
-    private String message;
-    private boolean done;
-    private final Supplier<String> checkmark = () -> this.done ? "X" : " ";
+public abstract class Task {
+    protected String message;
+    protected boolean done;
 
     public Task(String message, boolean done) {
         this.message = message;
@@ -25,8 +22,14 @@ public class Task {
         this.done = false;
     }
 
+    protected abstract String getTaskType();
+
+    protected String getCheckmark() {
+        return this.done ? "X" : " ";
+    }
+
     @Override
     public String toString() {
-        return String.format("[%s] %s", this.checkmark.get(), this.message);
+        return String.format("[%s][%s] %s", this.getTaskType(), this.getCheckmark(), this.message);
     }
 }

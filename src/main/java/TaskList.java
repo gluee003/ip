@@ -11,6 +11,10 @@ public class TaskList {
         this.tasks = new ArrayList<Task>();
     }
 
+    public int size() {
+        return this.tasks.size();
+    }
+
     /**
      * Adds a task to the task list.
      *
