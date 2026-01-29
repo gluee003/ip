@@ -1,3 +1,5 @@
+package bru.util;
+
 /**
  * The Utils class is a collection of useful methods.
  */

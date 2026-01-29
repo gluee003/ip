@@ -1,3 +1,5 @@
+package bru.exception;
+
 public class FileCorruptException extends BruException {
     public FileCorruptException(String message) {
         super(message);

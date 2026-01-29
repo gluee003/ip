@@ -1,3 +1,5 @@
+package bru.command;
+
 /**
  * The Command enum lists the possible types of commands supported by the bot.
  */

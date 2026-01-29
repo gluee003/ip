@@ -1,3 +1,5 @@
+package bru.object;
+
 /**
  * The Task class encapsulates the state of a task.
  */

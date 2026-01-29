@@ -1,3 +1,7 @@
+package bru.util;
+
+import bru.command.Command;
+
 import java.util.Arrays;
 
 /**

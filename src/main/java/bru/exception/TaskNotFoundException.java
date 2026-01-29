@@ -1,3 +1,5 @@
+package bru.exception;
+
 public class TaskNotFoundException extends BruException {
     public TaskNotFoundException(String message) {
         super(message);

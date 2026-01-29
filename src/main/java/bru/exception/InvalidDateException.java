@@ -1,3 +1,5 @@
+package bru.exception;
+
 public class InvalidDateException extends BruException {
     public InvalidDateException(String message) {
         super(message);
