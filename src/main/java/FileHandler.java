@@ -7,7 +7,10 @@ import java.io.BufferedReader;
 import java.nio.file.Path;
 import java.nio.file.Files;
 
+import java.time.format.DateTimeParseException;
 import java.util.List;
+
+import java.time.LocalDate;
 
 /**
  * The FileHandler class handles reading and writing from a save file.
@@ -17,16 +20,17 @@ public class FileHandler {
         String taskType = row[0];
         boolean isDone = row[1].equals("1");
         String message = row[2];
-        String date1 = row[3];
-        String date2 = row[4];
 
         switch (taskType) {
         case "T":
             return new TodoTask(message, isDone);
         case "D":
-            return new DeadlineTask(message, isDone, date1);
+            LocalDate deadline = LocalDate.parse(row[3]);
+            return new DeadlineTask(message, isDone, deadline);
         case "E":
-            return new EventTask(message, isDone, date1, date2);
+            LocalDate start = LocalDate.parse(row[3]);
+            LocalDate end = LocalDate.parse(row[4]);
+            return new EventTask(message, isDone, start, end);
         default:
             throw new FileCorruptException("");
         }

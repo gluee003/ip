@@ -1,8 +1,10 @@
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.time.LocalDate;
 
 public class Bru {
     public static final String NAME = "Bru";
@@ -105,10 +107,16 @@ public class Bru {
         }
         String msg = String.join(" ",
                 Arrays.copyOfRange(parms, 0,delimiterPosition));
-        String deadline = String.join(" ",
+        String deadlineStr = String.join(" ",
                 Arrays.copyOfRange(parms,delimiterPosition + 1,parms.length));
-        Task task = new DeadlineTask(msg, deadline);
-        Bru.addTask(task);
+
+        try {
+            LocalDate deadline = LocalDate.parse(deadlineStr);
+            Task task = new DeadlineTask(msg, deadline);
+            Bru.addTask(task);
+        } catch (DateTimeParseException e) {
+            throw new InvalidDateException(String.join(" ", parms));
+        }
     }
 
     private static void addEventTask(String[] parms) {
@@ -125,12 +133,18 @@ public class Bru {
         }
         String msg = String.join(" ",
                 Arrays.copyOfRange(parms, 0,startPosition));
-        String start = String.join(" ",
+        String startStr = String.join(" ",
                 Arrays.copyOfRange(parms, startPosition + 1,endPosition));
-        String end = String.join(" ",
+        String endStr = String.join(" ",
                 Arrays.copyOfRange(parms, endPosition + 1,parms.length));
-        Task task = new EventTask(msg, start, end);
-        Bru.addTask(task);
+        try {
+            LocalDate start = LocalDate.parse(startStr);
+            LocalDate end = LocalDate.parse(endStr);
+            Task task = new EventTask(msg, start, end);
+            Bru.addTask(task);
+        } catch (DateTimeParseException e) {
+            throw new InvalidDateException(String.join(" ", parms));
+        }
     }
 
     private static void deleteTask(String[] parms) {

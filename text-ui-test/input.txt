@@ -1,8 +1,8 @@
 todo borrow book
 list
-deadline return book /by Sunday
+deadline return book /by 2025-04-20
 list
-event project meeting /from Mon 2pm /to 4pm
+event project meeting /from 2025-04-21 /to 2025-04-22
 list
 mark 1
 list
@@ -21,14 +21,16 @@ delete
 mark zuckerberg
 unmark zuckerburger
 delete 6 7
-deadline assignment Sunday
+deadline assignment /by never
+deadline assignment 2025-04-23
 deadline assignment /by
-deadline /by Sunday
-event lecture /from /to 4pm
-event lecture /from 2pm /to
-event /from 2pm /to 4pm
-event lecture /to 4pm /from 2pm
-event lecture /from 4pm
-event lecture /to 2pm
+deadline /by 2025-04-23
+event lecture /from never /to ever
+event lecture /from /to 2025-04-23
+event lecture /from 2025-04-23 /to
+event /from 2025-04-23 /to 2025-04-23
+event lecture /to 2025-04-23 /from 2025-04-23
+event lecture /from 2025-04-23
+event lecture /to 2025-04-23
 asdfasjfajlkfafla
 bye
