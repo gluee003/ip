@@ -42,40 +42,19 @@ public class Bru {
         return new Pair<>(command, parms);
     }
 
-    private static void displayWelcomeMsg() {
-        System.out.println("Hello! I'm " + Bru.NAME);
-        System.out.println("What can I do for you?\n");
-    }
-
-    private static void displayGoodbyeMsg() {
-        System.out.println("See you next time bruh.");
-    }
-
-    private static void displayTaskList() {
-        System.out.println(Bru.taskList);
-    }
-
-    private static void markTask(String[] parms, boolean mark) {
+    private static void markTask(String[] parms, boolean isMarked) {
         if (parms.length == 0) {
             throw new EmptyParmsException(String.join(" ", parms));
         }
-        String markedMsg = "Nice! I've marked this task as done:";
-        String unmarkedMsg = "OK, I've marked this task as not done yet:";
         String value = String.join(" ", parms);
         try {
             int position = Integer.valueOf(value);
-            Task task = mark ? Bru.taskList.markTask(position) : Bru.taskList.unmarkTask(position);
+            Task task = isMarked ? Bru.taskList.markTask(position) : Bru.taskList.unmarkTask(position);
 
             if (task == null) {
                 throw new TaskNotFoundException(value);
             }
-
-            if (mark) {
-                System.out.println(markedMsg);
-            } else {
-                System.out.println(unmarkedMsg);
-            }
-            System.out.println(task);
+            Ui.displayTaskMarking(task, isMarked);
         } catch (NumberFormatException e) {
             throw new InvalidParmsException(value);
         }
@@ -83,8 +62,7 @@ public class Bru {
 
     private static void addTask(Task task) {
         Bru.taskList.addTask(task);
-        System.out.println(String.format("added: %s", task));
-        System.out.println(String.format("Now you have %d tasks in the list.", Bru.taskList.size()));
+        Ui.displayTaskAdding(task, Bru.taskList);
     }
 
     private static void addTodoTask(String[] parms) {
@@ -160,15 +138,14 @@ public class Bru {
                 throw new TaskNotFoundException(value);
             }
 
-            System.out.println(String.format("Noted. I've removed this task: %s", task));
-            System.out.println(String.format("Now you have %d tasks in the list.", Bru.taskList.size()));
+            Ui.displayTaskDeleting(task, Bru.taskList);
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             throw new InvalidParmsException(value);
         }
     }
 
     public static void main(String[] args) {
-        Bru.displayWelcomeMsg();
+        Ui.displayWelcomeMsg(Bru.NAME);
         Scanner scanner = new Scanner(System.in);
         boolean isChatting = true;
 
@@ -187,7 +164,7 @@ public class Bru {
                     isChatting = false;
                     break;
                 case LIST:
-                    Bru.displayTaskList();
+                    Ui.displayTaskList(Bru.taskList);
                     break;
                 case MARK:
                     Bru.markTask(parms, true);
@@ -211,11 +188,11 @@ public class Bru {
                     throw new UnknownCommandException(input);
                 }
             } catch (BruException e) {
-                System.out.println(e.getDisplayMessage(command.toString()));
+                Ui.displayErrorMsg(e, command);
             }
             FileHandler.writeToFile(SAVE_FILE_PATH, Bru.taskList);
         }
 
-        Bru.displayGoodbyeMsg();
+        Ui.displayGoodbyeMsg();
     }
 }
