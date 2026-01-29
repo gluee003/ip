@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 import java.lang.StringBuilder;
 
 /**
@@ -78,5 +80,17 @@ public class TaskList {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Returns current states of all tasks as a list of task information,
+     * to be used for writing save data to a file.
+     *
+     * @return List of String[] containing all task information.
+     */
+    public List<String> toRows() {
+        return this.tasks.stream()
+                .map(task -> String.join("|", task.toRow()))
+                .toList();
     }
 }

@@ -3,11 +3,11 @@
  */
 public abstract class Task {
     protected String message;
-    protected boolean done;
+    protected boolean isDone;
 
-    public Task(String message, boolean done) {
+    public Task(String message, boolean isDone) {
         this.message = message;
-        this.done = done;
+        this.isDone = isDone;
     }
 
     public Task(String message) {
@@ -15,18 +15,25 @@ public abstract class Task {
     }
 
     public void mark() {
-        this.done = true;
+        this.isDone = true;
     }
 
     public void unmark() {
-        this.done = false;
+        this.isDone = false;
     }
 
     protected abstract String getTaskType();
 
     protected String getCheckmark() {
-        return this.done ? "X" : " ";
+        return this.isDone ? "X" : " ";
     }
+
+    /**
+     * Returns current state as a string array, to be used for writing save data to a file.
+     *
+     * @return String array containing task information.
+     */
+    public abstract String[] toRow();
 
     @Override
     public String toString() {

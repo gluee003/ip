@@ -1,9 +1,14 @@
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Bru {
     public static final String NAME = "Bru";
-    private static TaskList taskList = new TaskList();
+    private static final Path SAVE_FOLDER_PATH = Paths.get("data");
+    private static final Path SAVE_FILE_PATH = Bru.SAVE_FOLDER_PATH.resolve("bru.txt");
+    private static TaskList taskList;
 
     private static Pair<Command, String[]> parseInput(String input) {
         String[] splitInput = input.split(" ");
@@ -153,6 +158,10 @@ public class Bru {
         Scanner scanner = new Scanner(System.in);
         boolean isChatting = true;
 
+        FileHandler.createFolder(Bru.SAVE_FOLDER_PATH);
+        FileHandler.createFile(Bru.SAVE_FILE_PATH);
+        Bru.taskList = FileHandler.readFromFile(Bru.SAVE_FILE_PATH);
+
         while (isChatting) {
             String input = scanner.nextLine();
             Pair<Command, String[]> pair = Bru.parseInput(input);
@@ -190,6 +199,7 @@ public class Bru {
             } catch (BruException e) {
                 System.out.println(e.getDisplayMessage(command.toString()));
             }
+            FileHandler.writeToFile(SAVE_FILE_PATH, Bru.taskList);
         }
 
         Bru.displayGoodbyeMsg();
