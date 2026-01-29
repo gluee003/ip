@@ -12,108 +12,6 @@ public class Bru {
     private static final Path SAVE_FILE_PATH = Bru.SAVE_FOLDER_PATH.resolve("bru.txt");
     private static TaskList taskList;
 
-    private static void markTask(String[] parms, boolean isMarked) {
-        if (parms.length == 0) {
-            throw new EmptyParmsException(String.join(" ", parms));
-        }
-        String value = String.join(" ", parms);
-        try {
-            int position = Integer.valueOf(value);
-            Task task = isMarked ? Bru.taskList.markTask(position) : Bru.taskList.unmarkTask(position);
-
-            if (task == null) {
-                throw new TaskNotFoundException(value);
-            }
-            Ui.displayTaskMarking(task, isMarked);
-        } catch (NumberFormatException e) {
-            throw new InvalidParmsException(value);
-        }
-    }
-
-    private static void addTask(Task task) {
-        Bru.taskList.addTask(task);
-        Ui.displayTaskAdding(task, Bru.taskList);
-    }
-
-    private static void addTodoTask(String[] parms) {
-        if (parms.length == 0) {
-            throw new EmptyParmsException(String.join(" ", parms));
-        }
-        String msg = String.join(" ", parms);
-        Task task = new TodoTask(msg);
-        Bru.addTask(task);
-    }
-
-    private static void addDeadlineTask(String[] parms) {
-        if (parms.length == 0) {
-            throw new EmptyParmsException(String.join(" ", parms));
-        }
-        int delimiterPosition = Utils.findInArr(parms, "/by");
-        if (delimiterPosition == -1 || delimiterPosition == 0
-                || delimiterPosition == parms.length - 1) {
-            throw new InvalidParmsException(String.join(" ",parms));
-        }
-        String msg = String.join(" ",
-                Arrays.copyOfRange(parms, 0,delimiterPosition));
-        String deadlineStr = String.join(" ",
-                Arrays.copyOfRange(parms,delimiterPosition + 1,parms.length));
-
-        try {
-            LocalDate deadline = LocalDate.parse(deadlineStr);
-            Task task = new DeadlineTask(msg, deadline);
-            Bru.addTask(task);
-        } catch (DateTimeParseException e) {
-            throw new InvalidDateException(String.join(" ", parms));
-        }
-    }
-
-    private static void addEventTask(String[] parms) {
-        if (parms.length == 0) {
-            throw new EmptyParmsException(String.join(" ", parms));
-        }
-        int startPosition = Utils.findInArr(parms, "/from");
-        int endPosition = Utils.findInArr(parms, "/to");
-        if (startPosition == -1 || endPosition == -1 || startPosition >= endPosition
-                || startPosition == 0 || startPosition == parms.length - 1
-                || endPosition == 0 || endPosition == parms.length - 1
-                || startPosition + 1 == endPosition) {
-            throw new InvalidParmsException(String.join(" ",parms));
-        }
-        String msg = String.join(" ",
-                Arrays.copyOfRange(parms, 0,startPosition));
-        String startStr = String.join(" ",
-                Arrays.copyOfRange(parms, startPosition + 1,endPosition));
-        String endStr = String.join(" ",
-                Arrays.copyOfRange(parms, endPosition + 1,parms.length));
-        try {
-            LocalDate start = LocalDate.parse(startStr);
-            LocalDate end = LocalDate.parse(endStr);
-            Task task = new EventTask(msg, start, end);
-            Bru.addTask(task);
-        } catch (DateTimeParseException e) {
-            throw new InvalidDateException(String.join(" ", parms));
-        }
-    }
-
-    private static void deleteTask(String[] parms) {
-        if (parms.length == 0) {
-            throw new EmptyParmsException(String.join(" ", parms));
-        }
-        String value = String.join(" ", parms);
-        try {
-            int position = Integer.valueOf(value);
-            Task task = Bru.taskList.deleteTask(position);
-
-            if (task == null) {
-                throw new TaskNotFoundException(value);
-            }
-
-            Ui.displayTaskDeleting(task, Bru.taskList);
-        } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            throw new InvalidParmsException(value);
-        }
-    }
-
     public static void main(String[] args) {
         Ui.displayWelcomeMsg(Bru.NAME);
         Scanner scanner = new Scanner(System.in);
@@ -137,22 +35,22 @@ public class Bru {
                     Ui.displayTaskList(Bru.taskList);
                     break;
                 case MARK:
-                    Bru.markTask(parms, true);
+                    CommandHandler.markTask(parms, true, Bru.taskList);
                     break;
                 case UNMARK:
-                    Bru.markTask(parms, false);
+                    CommandHandler.markTask(parms, false, Bru.taskList);
                     break;
                 case TODO:
-                    Bru.addTodoTask(parms);
+                    CommandHandler.addTodoTask(parms, Bru.taskList);
                     break;
                 case DEADLINE:
-                    Bru.addDeadlineTask(parms);
+                    CommandHandler.addDeadlineTask(parms, Bru.taskList);
                     break;
                 case EVENT:
-                    Bru.addEventTask(parms);
+                    CommandHandler.addEventTask(parms, Bru.taskList);
                     break;
                 case DELETE:
-                    Bru.deleteTask(parms);
+                    CommandHandler.deleteTask(parms, Bru.taskList);
                     break;
                 default:
                     throw new UnknownCommandException(input);
