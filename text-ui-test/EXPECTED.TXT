@@ -5,39 +5,39 @@ added: [T][ ] borrow book
 Now you have 1 tasks in the list.
 1. [T][ ] borrow book
 
-added: [D][ ] return book (by: Sunday)
+added: [D][ ] return book (by: Apr 20 2025)
 Now you have 2 tasks in the list.
 1. [T][ ] borrow book
-2. [D][ ] return book (by: Sunday)
+2. [D][ ] return book (by: Apr 20 2025)
 
-added: [E][ ] project meeting (from: Mon 2pm to: 4pm)
+added: [E][ ] project meeting (from: Apr 21 2025 to: Apr 22 2025)
 Now you have 3 tasks in the list.
 1. [T][ ] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+2. [D][ ] return book (by: Apr 20 2025)
+3. [E][ ] project meeting (from: Apr 21 2025 to: Apr 22 2025)
 
 Nice! I've marked this task as done:
 [T][X] borrow book
 1. [T][X] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+2. [D][ ] return book (by: Apr 20 2025)
+3. [E][ ] project meeting (from: Apr 21 2025 to: Apr 22 2025)
 
 OK, I've marked this task as not done yet:
 [T][ ] borrow book
 1. [T][ ] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+2. [D][ ] return book (by: Apr 20 2025)
+3. [E][ ] project meeting (from: Apr 21 2025 to: Apr 22 2025)
 
 OK, I've marked this task as not done yet:
-[D][ ] return book (by: Sunday)
+[D][ ] return book (by: Apr 20 2025)
 1. [T][ ] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+2. [D][ ] return book (by: Apr 20 2025)
+3. [E][ ] project meeting (from: Apr 21 2025 to: Apr 22 2025)
 
 Noted. I've removed this task: [T][ ] borrow book
 Now you have 2 tasks in the list.
-1. [D][ ] return book (by: Sunday)
-2. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+1. [D][ ] return book (by: Apr 20 2025)
+2. [E][ ] project meeting (from: Apr 21 2025 to: Apr 22 2025)
 
 Bruh... the task to mark could not be found.
 Bruh... the task to unmark could not be found.
@@ -48,9 +48,11 @@ Bruh... the description of delete cannot be empty.
 Bruh... the description of mark is invalid.
 Bruh... the description of unmark is invalid.
 Bruh... the description of delete is invalid.
+Bruh... the date(s) of deadline is invalid
 Bruh... the description of deadline is invalid.
 Bruh... the description of deadline is invalid.
 Bruh... the description of deadline is invalid.
+Bruh... the date(s) of event is invalid
 Bruh... the description of event is invalid.
 Bruh... the description of event is invalid.
 Bruh... the description of event is invalid.
