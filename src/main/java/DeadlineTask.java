@@ -4,8 +4,8 @@
 public class DeadlineTask extends Task {
     protected String deadline;
 
-    public DeadlineTask(String message, boolean done, String deadline) {
-        super(message, done);
+    public DeadlineTask(String message, boolean isDone, String deadline) {
+        super(message, isDone);
         this.deadline = deadline;
     }
 
@@ -21,5 +21,10 @@ public class DeadlineTask extends Task {
     @Override
     public String toString() {
         return String.format("%s (by: %s)", super.toString(), this.deadline);
+    }
+
+    @Override
+    public String[] toRow() {
+        return new String[] {"D", this.isDone ? "1" : "0", this.message, this.deadline, ""};
     }
 }
