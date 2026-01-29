@@ -8,7 +8,7 @@ if exist ACTUAL.TXT del ACTUAL.TXT
 if exist data\bru.txt del data\bru.txt
 
 REM compile the code into the bin folder
-javac  -cp ..\src\main\java -Xlint:none -d ..\bin ..\src\main\java\*.java
+javac  -cp ..\src\main\java -Xlint:none -d ..\bin ..\src\main\java\bru\*.java ..\src\main\java\bru\command\*.java ..\src\main\java\bru\exception\*.java ..\src\main\java\bru\object\*.java ..\src\main\java\bru\util\*.java
 
 IF ERRORLEVEL 1 (
     echo ********** BUILD FAILURE **********

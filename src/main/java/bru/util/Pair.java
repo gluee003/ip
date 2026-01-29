@@ -1,3 +1,5 @@
+package bru.util;
+
 /**
  * The Pair<T, S> class stores a pair of objects of type T and type S.
  */

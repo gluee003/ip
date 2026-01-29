@@ -1,3 +1,5 @@
+package bru.exception;
+
 public class EmptyParmsException extends InvalidParmsException {
     public EmptyParmsException(String message) {
         super(message);

@@ -1,3 +1,5 @@
+package bru.exception;
+
 public class UnknownCommandException extends BruException {
     public UnknownCommandException(String message) {
         super(message);

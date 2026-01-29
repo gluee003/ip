@@ -1,3 +1,10 @@
+package bru.util;
+
+import bru.object.Task;
+import bru.object.TaskList;
+import bru.command.Command;
+import bru.exception.BruException;
+
 /**
  * The Ui class handles displaying output to the user.
  */
