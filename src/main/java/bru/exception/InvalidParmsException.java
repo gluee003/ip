@@ -1,5 +1,9 @@
 package bru.exception;
 
+/**
+ * The InvalidParmsException class represents an exceptional event
+ * where the user supplied parameters to a command in an invalid format.
+ */
 public class InvalidParmsException extends BruException {
     public InvalidParmsException(String message) {
         super(message);
