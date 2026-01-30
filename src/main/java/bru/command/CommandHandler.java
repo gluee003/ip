@@ -7,15 +7,36 @@ import bru.exception.TaskNotFoundException;
 import bru.object.*;
 import bru.util.Ui;
 import bru.util.Utils;
+import bru.util.Pair;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * The CommandHandler handles the logic of running user commands.
  */
 public class CommandHandler {
+    /**
+     * Finds tasks whose description matches a user specified pattern.
+     *
+     * @param parms The parameters supplied by the user
+     * @param taskList The task list
+     */
+    public static void findTask(String[] parms, TaskList taskList) {
+        if (parms.length == 0) {
+            throw new EmptyParmsException(String.join(" ", parms));
+        }
+        String value = String.join(" ", parms);
+        String pattern = String.format(".*%s.*", value);
+        ArrayList<Pair<Integer, Task>> foundTasks = taskList.findTasks(pattern);
+        if (foundTasks.isEmpty()) {
+            throw new TaskNotFoundException(value);
+        }
+        Ui.displayFilteredTaskList(foundTasks);
+    }
+
     /**
      * Marks a task in the task list as completed.
      *

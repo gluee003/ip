@@ -5,6 +5,8 @@ import bru.object.TaskList;
 import bru.command.Command;
 import bru.exception.BruException;
 
+import java.util.ArrayList;
+
 /**
  * The Ui class handles displaying output to the user.
  */
@@ -33,6 +35,23 @@ public class Ui {
      */
     public static void displayTaskList(TaskList taskList) {
         System.out.println(taskList);
+    }
+
+    /**
+     * Prints a filtered task list.
+     *
+     * @param tasks The filtered tasks with their indices.
+     */
+    public static void displayFilteredTaskList(ArrayList<Pair<Integer, Task>> tasks) {
+        String successMsg = "Here are the matching tasks in your list:";
+        System.out.println(successMsg);
+        StringBuilder sb = new StringBuilder();
+
+        for (Pair<Integer, Task> p : tasks) {
+            sb.append(String.format("%d. %s\n", p.getFirst(),p.getSecond()));
+        }
+
+        System.out.println(sb.toString());
     }
 
     /**

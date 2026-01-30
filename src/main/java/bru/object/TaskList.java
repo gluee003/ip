@@ -1,5 +1,8 @@
 package bru.object;
 
+import bru.exception.EmptyParmsException;
+import bru.util.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.StringBuilder;
@@ -16,6 +19,23 @@ public class TaskList {
 
     public int size() {
         return this.tasks.size();
+    }
+
+    /**
+     * Returns the list of pairs of tasks, and their positions, whose description matches a given pattern.
+     *
+     * @param pattern The string pattern to match against
+     */
+    public ArrayList<Pair<Integer, Task>> findTasks(String pattern) {
+        ArrayList<Pair<Integer, Task>> foundTasks = new ArrayList<>();
+
+        for (int i = 0; i < this.tasks.size(); i++) {
+            if (this.tasks.get(i).message.matches(pattern)) {
+                foundTasks.add(new Pair<>(i + 1, this.tasks.get(i)));
+            }
+        }
+
+        return foundTasks;
     }
 
     /**
