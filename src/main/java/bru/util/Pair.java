@@ -21,6 +21,13 @@ public class Pair<T, S> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o instanceof Pair<?, ?> p) {
+            return (this.first.equals(p.first) && this.second.equals(p.second));
+        }
+        return false;
+    }
+    @Override
     public String toString() {
         return String.format("(%s, %s)", this.first, this.second);
     }
