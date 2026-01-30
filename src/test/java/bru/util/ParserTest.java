@@ -62,6 +62,16 @@ public class ParserTest {
     }
 
     @Test
+    public void parseInputTest_find() {
+        String input = "find dx";
+        Command expected1 = Command.FIND;
+        String[] expected2 = new String[] {"dx"};
+        Pair<Command, String[]> p = Parser.parseInput(input);
+        assertEquals(expected1, p.getFirst());
+        assertTrue(Arrays.equals(expected2, p.getSecond()));
+    }
+
+    @Test
     public void parseInputTest_mark() {
         String input = "mark 1";
         Command expected1 = Command.MARK;

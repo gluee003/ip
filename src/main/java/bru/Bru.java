@@ -42,6 +42,9 @@ public class Bru {
                 case LIST:
                     Ui.displayTaskList(Bru.taskList);
                     break;
+                case FIND:
+                    CommandHandler.findTask(parms, Bru.taskList);
+                    break;
                 case MARK:
                     CommandHandler.markTask(parms, true, Bru.taskList);
                     break;

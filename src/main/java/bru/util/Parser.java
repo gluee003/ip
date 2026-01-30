@@ -21,6 +21,8 @@ public class Parser {
             command = Command.BYE;
         } else if (cmd.equals("list")) {
             command = Command.LIST;
+        } else if (cmd.equals("find")) {
+            command = Command.FIND;
         } else if (cmd.equals("mark")) {
             command = Command.MARK;
         } else if (cmd.equals("unmark")) {

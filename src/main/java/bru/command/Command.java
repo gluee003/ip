@@ -9,6 +9,7 @@ public enum Command {
     EVENT("event"),
     DELETE("delete"),
     LIST("list"),
+    FIND("find"),
     MARK("mark"),
     UNMARK("unmark"),
     BYE("bye"),

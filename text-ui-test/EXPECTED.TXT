@@ -34,6 +34,10 @@ OK, I've marked this task as not done yet:
 2. [D][ ] return book (by: Apr 20 2025)
 3. [E][ ] project meeting (from: Apr 21 2025 to: Apr 22 2025)
 
+Here are the matching tasks in your list:
+1. [T][ ] borrow book
+2. [D][ ] return book (by: Apr 20 2025)
+
 Noted. I've removed this task: [T][ ] borrow book
 Now you have 2 tasks in the list.
 1. [D][ ] return book (by: Apr 20 2025)
@@ -44,6 +48,7 @@ Bruh... the task to unmark could not be found.
 Bruh... the description of todo cannot be empty.
 Bruh... the description of deadline cannot be empty.
 Bruh... the description of event cannot be empty.
+Bruh... the description of find cannot be empty.
 Bruh... the description of delete cannot be empty.
 Bruh... the description of mark is invalid.
 Bruh... the description of unmark is invalid.
@@ -59,5 +64,6 @@ Bruh... the description of event is invalid.
 Bruh... the description of event is invalid.
 Bruh... the description of event is invalid.
 Bruh... the description of event is invalid.
+Bruh... the task to find could not be found.
 Bruh... I don't know what you mean.
 See you next time bruh.
