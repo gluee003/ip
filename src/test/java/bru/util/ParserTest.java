@@ -1,14 +1,13 @@
 package bru.util;
 
-import org.junit.jupiter.api.Test;
-import bru.command.Command;
-
-import bru.util.Parser;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import bru.command.Command;
 
 public class ParserTest {
     @Test

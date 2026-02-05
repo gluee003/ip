@@ -1,25 +1,20 @@
 package bru.util;
 
-import bru.exception.FileCorruptException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.List;
 
+import bru.exception.FileCorruptException;
+import bru.object.DeadlineTask;
+import bru.object.EventTask;
 import bru.object.Task;
 import bru.object.TaskList;
 import bru.object.TodoTask;
-import bru.object.DeadlineTask;
-import bru.object.EventTask;
-
-
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-
-import java.nio.file.Path;
-import java.nio.file.Files;
-
-import java.util.List;
-
-import java.time.LocalDate;
 
 /**
  * The FileHandler class handles reading and writing from a save file.
@@ -48,7 +43,7 @@ public class FileHandler {
     /**
      * Writes the information in the task list to a file.
      *
-     * @param path The relative path to the file
+     * @param path     The relative path to the file
      * @param taskList The task list to be written
      */
     public static void writeToFile(Path path, TaskList taskList) {
@@ -75,7 +70,7 @@ public class FileHandler {
         try {
             FileReader fileReader = new FileReader(path.toFile());
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-            List<String[]> data  = bufferedReader.lines()
+            List<String[]> data = bufferedReader.lines()
                     .map(row -> row.split("\\|", -1))
                     .toList();
             bufferedReader.close();

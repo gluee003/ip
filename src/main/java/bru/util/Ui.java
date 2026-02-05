@@ -1,13 +1,11 @@
 package bru.util;
 
-import bru.object.Task;
-import bru.object.TaskList;
+import java.util.ArrayList;
 
 import bru.command.Command;
-
 import bru.exception.BruException;
-
-import java.util.ArrayList;
+import bru.object.Task;
+import bru.object.TaskList;
 
 /**
  * The Ui class handles displaying output to the user.
@@ -50,7 +48,7 @@ public class Ui {
         StringBuilder sb = new StringBuilder();
 
         for (Pair<Integer, Task> p : tasks) {
-            sb.append(String.format("%d. %s\n", p.getFirst(),p.getSecond()));
+            sb.append(String.format("%d. %s\n", p.getFirst(), p.getSecond()));
         }
 
         System.out.println(sb.toString());
@@ -59,7 +57,7 @@ public class Ui {
     /**
      * Prints a task that was marked/unmarked.
      *
-     * @param task The task
+     * @param task     The task
      * @param isMarked Whether the task was marked/unmarked
      */
     public static void displayTaskMarking(Task task, boolean isMarked) {
@@ -73,7 +71,7 @@ public class Ui {
      * Prints a task that was added.
      * Also prints the size of task list.
      *
-     * @param task The task that as added
+     * @param task     The task that as added
      * @param taskList The task list
      */
     public static void displayTaskAdding(Task task, TaskList taskList) {
@@ -85,7 +83,7 @@ public class Ui {
      * Prints a task that was removed.
      * Also prints the size of task list.
      *
-     * @param task The task that as removed
+     * @param task     The task that as removed
      * @param taskList The task list
      */
     public static void displayTaskDeleting(Task task, TaskList taskList) {
@@ -96,7 +94,7 @@ public class Ui {
     /**
      * Prints an error message based on an exception that was thrown.
      *
-     * @param e The exception
+     * @param e       The exception
      * @param command The command that caused the exception
      */
     public static void displayErrorMsg(BruException e, Command command) {

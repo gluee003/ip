@@ -8,10 +8,10 @@ public class Utils {
      * Returns the index of the first occurrence of the target element in an array.
      * Returns -1 is the element is not in the array.
      *
-     * @param arr The array to search on.
+     * @param arr    The array to search on.
      * @param target The target element.
+     * @param <T>    The type of the array and target.
      * @return Index of target.
-     * @param <T> The type of the array and target.
      */
     public static <T> int findInArr(T[] arr, T target) {
         int index = -1;

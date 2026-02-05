@@ -10,6 +10,14 @@ public class EventTask extends Task {
     protected LocalDate start;
     protected LocalDate end;
 
+    /**
+     * Instantiates a task with a start and end date.
+     *
+     * @param message The contents of the task.
+     * @param isDone  Whether the task was completed or not.
+     * @param start   The start date.
+     * @param end     The end date.
+     */
     public EventTask(String message, boolean isDone, LocalDate start, LocalDate end) {
         super(message, isDone);
         this.start = start;
@@ -37,6 +45,6 @@ public class EventTask extends Task {
 
     @Override
     public String[] toRow() {
-        return new String[] {"E", this.isDone ? "1" : "0", this.message, this.start.toString(), this.end.toString()};
+        return new String[]{"E", this.isDone ? "1" : "0", this.message, this.start.toString(), this.end.toString()};
     }
 }
