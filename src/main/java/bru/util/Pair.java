@@ -1,12 +1,18 @@
 package bru.util;
 
 /**
- * The Pair<T, S> class stores a pair of objects of type T and type S.
+ * The Pair class stores a pair of objects of type T and type S.
  */
 public class Pair<T, S> {
     private T first;
     private S second;
 
+    /**
+     * Instantiates a Pair with first object of type T and second object of type S.
+     *
+     * @param first  The first object.
+     * @param second The second object.
+     */
     public Pair(T first, S second) {
         this.first = first;
         this.second = second;
@@ -27,6 +33,7 @@ public class Pair<T, S> {
         }
         return false;
     }
+
     @Override
     public String toString() {
         return String.format("(%s, %s)", this.first, this.second);

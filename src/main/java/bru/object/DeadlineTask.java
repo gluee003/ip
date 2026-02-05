@@ -9,6 +9,13 @@ import java.time.format.DateTimeFormatter;
 public class DeadlineTask extends Task {
     protected LocalDate deadline;
 
+    /**
+     * Instantiates a task with a deadline.
+     *
+     * @param message  The contents of the task.
+     * @param isDone   Whether the task is completed or not.
+     * @param deadline The deadline to complete the task by.
+     */
     public DeadlineTask(String message, boolean isDone, LocalDate deadline) {
         super(message, isDone);
         this.deadline = deadline;
@@ -34,6 +41,6 @@ public class DeadlineTask extends Task {
 
     @Override
     public String[] toRow() {
-        return new String[] {"D", this.isDone ? "1" : "0", this.message, this.deadline.toString(), ""};
+        return new String[]{"D", this.isDone ? "1" : "0", this.message, this.deadline.toString(), ""};
     }
 }

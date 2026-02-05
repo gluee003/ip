@@ -1,23 +1,22 @@
 package bru;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
+
 import bru.command.Command;
 import bru.command.CommandHandler;
-
 import bru.exception.BruException;
 import bru.exception.UnknownCommandException;
-
 import bru.object.TaskList;
-
 import bru.util.FileHandler;
 import bru.util.Pair;
 import bru.util.Parser;
 import bru.util.Ui;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import java.util.Scanner;
-
+/**
+ * The Bru class is the entry point to the chatbot.
+ */
 public class Bru {
     public static final String NAME = "Bru";
     private static final Path SAVE_FOLDER_PATH = Paths.get("data");

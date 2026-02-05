@@ -7,6 +7,12 @@ public abstract class Task {
     protected String message;
     protected boolean isDone;
 
+    /**
+     * Instantiates a task object.
+     *
+     * @param message The contents of the task.
+     * @param isDone  Whether the task was completed or not.
+     */
     public Task(String message, boolean isDone) {
         this.message = message;
         this.isDone = isDone;

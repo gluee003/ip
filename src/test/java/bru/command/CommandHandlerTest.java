@@ -1,16 +1,14 @@
 package bru.command;
 
-import bru.exception.EmptyParmsException;
-import bru.exception.InvalidParmsException;
-import bru.exception.TaskNotFoundException;
-
-import bru.object.TaskList;
-import bru.object.TodoTask;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import bru.exception.EmptyParmsException;
+import bru.exception.InvalidParmsException;
+import bru.exception.TaskNotFoundException;
+import bru.object.TaskList;
+import bru.object.TodoTask;
 
 public class CommandHandlerTest {
     @Test

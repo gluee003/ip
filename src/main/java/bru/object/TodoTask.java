@@ -19,6 +19,6 @@ public class TodoTask extends Task {
 
     @Override
     public String[] toRow() {
-        return new String[] {"T", this.isDone ? "1" : "0", this.message, "", ""};
+        return new String[]{"T", this.isDone ? "1" : "0", this.message, "", ""};
     }
 }

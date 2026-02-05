@@ -1,24 +1,22 @@
 package bru.command;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import bru.exception.EmptyParmsException;
 import bru.exception.InvalidDateException;
 import bru.exception.InvalidParmsException;
 import bru.exception.TaskNotFoundException;
-
+import bru.object.DeadlineTask;
+import bru.object.EventTask;
 import bru.object.Task;
 import bru.object.TaskList;
 import bru.object.TodoTask;
-import bru.object.DeadlineTask;
-import bru.object.EventTask;
-
+import bru.util.Pair;
 import bru.util.Ui;
 import bru.util.Utils;
-import bru.util.Pair;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 /**
  * The CommandHandler handles the logic of running user commands.
@@ -27,7 +25,7 @@ public class CommandHandler {
     /**
      * Finds tasks whose description matches a user specified pattern.
      *
-     * @param parms The parameters supplied by the user
+     * @param parms    The parameters supplied by the user
      * @param taskList The task list
      */
     public static void findTask(String[] parms, TaskList taskList) {
@@ -46,7 +44,7 @@ public class CommandHandler {
     /**
      * Marks a task in the task list as completed.
      *
-     * @param parms The parameters supplied by the user
+     * @param parms    The parameters supplied by the user
      * @param isMarked Whether to mark/unmark the task
      * @param taskList The task list
      */
@@ -71,7 +69,7 @@ public class CommandHandler {
     /**
      * Adds a task to the task list
      *
-     * @param task The task to be added
+     * @param task     The task to be added
      * @param taskList The task list
      */
     public static void addTask(Task task, TaskList taskList) {
@@ -82,7 +80,7 @@ public class CommandHandler {
     /**
      * Adds a todo task to the task list
      *
-     * @param parms The parameters supplied by the user
+     * @param parms    The parameters supplied by the user
      * @param taskList The task list
      */
     public static void addTodoTask(String[] parms, TaskList taskList) {
@@ -97,7 +95,7 @@ public class CommandHandler {
     /**
      * Adds a deadline task to the task list
      *
-     * @param parms The parameters supplied by the user
+     * @param parms    The parameters supplied by the user
      * @param taskList The task list
      */
     public static void addDeadlineTask(String[] parms, TaskList taskList) {
@@ -107,12 +105,12 @@ public class CommandHandler {
         int delimiterPosition = Utils.findInArr(parms, "/by");
         if (delimiterPosition == -1 || delimiterPosition == 0
                 || delimiterPosition == parms.length - 1) {
-            throw new InvalidParmsException(String.join(" ",parms));
+            throw new InvalidParmsException(String.join(" ", parms));
         }
         String msg = String.join(" ",
-                Arrays.copyOfRange(parms, 0,delimiterPosition));
+                Arrays.copyOfRange(parms, 0, delimiterPosition));
         String deadlineStr = String.join(" ",
-                Arrays.copyOfRange(parms,delimiterPosition + 1,parms.length));
+                Arrays.copyOfRange(parms, delimiterPosition + 1, parms.length));
 
         try {
             LocalDate deadline = LocalDate.parse(deadlineStr);
@@ -126,7 +124,7 @@ public class CommandHandler {
     /**
      * Adds a event task to the task list
      *
-     * @param parms The parameters supplied by the user
+     * @param parms    The parameters supplied by the user
      * @param taskList The task list
      */
     public static void addEventTask(String[] parms, TaskList taskList) {
@@ -139,14 +137,14 @@ public class CommandHandler {
                 || startPosition == 0 || startPosition == parms.length - 1
                 || endPosition == 0 || endPosition == parms.length - 1
                 || startPosition + 1 == endPosition) {
-            throw new InvalidParmsException(String.join(" ",parms));
+            throw new InvalidParmsException(String.join(" ", parms));
         }
         String msg = String.join(" ",
-                Arrays.copyOfRange(parms, 0,startPosition));
+                Arrays.copyOfRange(parms, 0, startPosition));
         String startStr = String.join(" ",
-                Arrays.copyOfRange(parms, startPosition + 1,endPosition));
+                Arrays.copyOfRange(parms, startPosition + 1, endPosition));
         String endStr = String.join(" ",
-                Arrays.copyOfRange(parms, endPosition + 1,parms.length));
+                Arrays.copyOfRange(parms, endPosition + 1, parms.length));
         try {
             LocalDate start = LocalDate.parse(startStr);
             LocalDate end = LocalDate.parse(endStr);
@@ -160,7 +158,7 @@ public class CommandHandler {
     /**
      * Removes a task from the task list.
      *
-     * @param parms The parameters supplied by the user
+     * @param parms    The parameters supplied by the user
      * @param taskList The task list
      */
     public static void deleteTask(String[] parms, TaskList taskList) {
