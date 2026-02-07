@@ -27,8 +27,9 @@ public class CommandHandler {
      *
      * @param parms    The parameters supplied by the user
      * @param taskList The task list
+     * @return The output of tasks to be displayed.
      */
-    public static void findTask(String[] parms, TaskList taskList) {
+    public static String findTask(String[] parms, TaskList taskList) {
         if (parms.length == 0) {
             throw new EmptyParmsException(String.join(" ", parms));
         }
@@ -38,7 +39,7 @@ public class CommandHandler {
         if (foundTasks.isEmpty()) {
             throw new TaskNotFoundException(value);
         }
-        Ui.displayFilteredTaskList(foundTasks);
+        return Ui.getFilteredTaskList(foundTasks);
     }
 
     /**
@@ -47,8 +48,9 @@ public class CommandHandler {
      * @param parms    The parameters supplied by the user
      * @param isMarked Whether to mark/unmark the task
      * @param taskList The task list
+     * @return The output of marked task to be displayed.
      */
-    public static void markTask(String[] parms, boolean isMarked, TaskList taskList) {
+    public static String markTask(String[] parms, boolean isMarked, TaskList taskList) {
         if (parms.length == 0) {
             throw new EmptyParmsException(String.join(" ", parms));
         }
@@ -60,7 +62,7 @@ public class CommandHandler {
             if (task == null) {
                 throw new TaskNotFoundException(value);
             }
-            Ui.displayTaskMarking(task, isMarked);
+            return Ui.getTaskMarking(task, isMarked);
         } catch (NumberFormatException e) {
             throw new InvalidParmsException(value);
         }
@@ -72,9 +74,9 @@ public class CommandHandler {
      * @param task     The task to be added
      * @param taskList The task list
      */
-    public static void addTask(Task task, TaskList taskList) {
+    public static String addTask(Task task, TaskList taskList) {
         taskList.addTask(task);
-        Ui.displayTaskAdding(task, taskList);
+        return Ui.getTaskAdding(task, taskList);
     }
 
     /**
@@ -83,13 +85,13 @@ public class CommandHandler {
      * @param parms    The parameters supplied by the user
      * @param taskList The task list
      */
-    public static void addTodoTask(String[] parms, TaskList taskList) {
+    public static String addTodoTask(String[] parms, TaskList taskList) {
         if (parms.length == 0) {
             throw new EmptyParmsException(String.join(" ", parms));
         }
         String msg = String.join(" ", parms);
         Task task = new TodoTask(msg);
-        CommandHandler.addTask(task, taskList);
+        return CommandHandler.addTask(task, taskList);
     }
 
     /**
@@ -98,7 +100,7 @@ public class CommandHandler {
      * @param parms    The parameters supplied by the user
      * @param taskList The task list
      */
-    public static void addDeadlineTask(String[] parms, TaskList taskList) {
+    public static String addDeadlineTask(String[] parms, TaskList taskList) {
         if (parms.length == 0) {
             throw new EmptyParmsException(String.join(" ", parms));
         }
@@ -115,7 +117,7 @@ public class CommandHandler {
         try {
             LocalDate deadline = LocalDate.parse(deadlineStr);
             Task task = new DeadlineTask(msg, deadline);
-            CommandHandler.addTask(task, taskList);
+            return CommandHandler.addTask(task, taskList);
         } catch (DateTimeParseException e) {
             throw new InvalidDateException(String.join(" ", parms));
         }
@@ -127,7 +129,7 @@ public class CommandHandler {
      * @param parms    The parameters supplied by the user
      * @param taskList The task list
      */
-    public static void addEventTask(String[] parms, TaskList taskList) {
+    public static String addEventTask(String[] parms, TaskList taskList) {
         if (parms.length == 0) {
             throw new EmptyParmsException(String.join(" ", parms));
         }
@@ -149,7 +151,7 @@ public class CommandHandler {
             LocalDate start = LocalDate.parse(startStr);
             LocalDate end = LocalDate.parse(endStr);
             Task task = new EventTask(msg, start, end);
-            CommandHandler.addTask(task, taskList);
+            return CommandHandler.addTask(task, taskList);
         } catch (DateTimeParseException e) {
             throw new InvalidDateException(String.join(" ", parms));
         }
@@ -161,7 +163,7 @@ public class CommandHandler {
      * @param parms    The parameters supplied by the user
      * @param taskList The task list
      */
-    public static void deleteTask(String[] parms, TaskList taskList) {
+    public static String deleteTask(String[] parms, TaskList taskList) {
         if (parms.length == 0) {
             throw new EmptyParmsException(String.join(" ", parms));
         }
@@ -174,7 +176,7 @@ public class CommandHandler {
                 throw new TaskNotFoundException(value);
             }
 
-            Ui.displayTaskDeleting(task, taskList);
+            return Ui.getTaskDeleting(task, taskList);
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             throw new InvalidParmsException(value);
         }
