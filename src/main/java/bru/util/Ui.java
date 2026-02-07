@@ -8,96 +8,102 @@ import bru.object.Task;
 import bru.object.TaskList;
 
 /**
- * The Ui class handles displaying output to the user.
+ * The Ui class handles formatting output to be displayed to the user.
  */
 public class Ui {
     /**
-     * Prints a welcome message, introducing the chatbot's name.
+     * Formats a welcome message, introducing the chatbot's name.
      *
      * @param name The chatbot's name
      */
-    public static void displayWelcomeMsg(String name) {
-        System.out.println("Hello! I'm " + name);
-        System.out.println("What can I do for you?\n");
+    public static String getWelcomeMsg(String name) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Yo, I'm %s.\n", name));
+        sb.append("What can a brother do for you?");
+        return sb.toString();
     }
 
     /**
-     * Prints a goodbye message, indicating the end of the session.
+     * Formats a goodbye message, indicating the end of the session.
      */
-    public static void displayGoodbyeMsg() {
-        System.out.println("See you next time bruh.");
+    public static String getGoodbyeMsg() {
+        return "See you next time bruh.";
     }
 
     /**
-     * Prints every task in the task list.
+     * Formats task list to be displayed.
      *
      * @param taskList The task list.
      */
-    public static void displayTaskList(TaskList taskList) {
-        System.out.println(taskList);
+    public static String getTaskList(TaskList taskList) {
+        return taskList.toString();
     }
 
     /**
-     * Prints a filtered task list.
+     * Formats the filtered task list to be displayed.
      *
      * @param tasks The filtered tasks with their indices.
      */
-    public static void displayFilteredTaskList(ArrayList<Pair<Integer, Task>> tasks) {
-        String successMsg = "Here are the matching tasks in your list:";
-        System.out.println(successMsg);
+    public static String getFilteredTaskList(ArrayList<Pair<Integer, Task>> tasks) {
+        String successMsg = "Okay bruh, here are the matching tasks in your list:\n";
         StringBuilder sb = new StringBuilder();
+        sb.append(successMsg);
 
         for (Pair<Integer, Task> p : tasks) {
             sb.append(String.format("%d. %s\n", p.getFirst(), p.getSecond()));
         }
 
-        System.out.println(sb.toString());
+        return sb.toString();
     }
 
     /**
-     * Prints a task that was marked/unmarked.
+     * Formats the marked/unmarked task to be displayed.
      *
      * @param task     The task
      * @param isMarked Whether the task was marked/unmarked
      */
-    public static void displayTaskMarking(Task task, boolean isMarked) {
-        String markedMsg = "Nice! I've marked this task as done:";
-        String unmarkedMsg = "OK, I've marked this task as not done yet:";
-        System.out.println(isMarked ? markedMsg : unmarkedMsg);
-        System.out.println(task);
+    public static String getTaskMarking(Task task, boolean isMarked) {
+        String markedMsg = "Nice one bruh. I've marked this task as done:\n";
+        String unmarkedMsg = "Bruh moment. I've marked this task as not done yet:\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append(isMarked ? markedMsg : unmarkedMsg);
+        sb.append(task);
+        return sb.toString();
     }
 
     /**
-     * Prints a task that was added.
-     * Also prints the size of task list.
+     * Formats the task to be added, along with the size of the task list.
      *
      * @param task     The task that as added
      * @param taskList The task list
      */
-    public static void displayTaskAdding(Task task, TaskList taskList) {
-        System.out.println(String.format("added: %s", task));
-        System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+    public static String getTaskAdding(Task task, TaskList taskList) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("added: %s\n", task));
+        sb.append(String.format("Now you have %d tasks in the list.", taskList.size()));
+        return sb.toString();
     }
 
     /**
-     * Prints a task that was removed.
-     * Also prints the size of task list.
+     * Formats the task to be added, along with the size of the task list.
      *
      * @param task     The task that as removed
      * @param taskList The task list
      */
-    public static void displayTaskDeleting(Task task, TaskList taskList) {
-        System.out.println(String.format("Noted. I've removed this task: %s", task));
-        System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+    public static String getTaskDeleting(Task task, TaskList taskList) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Okay bruh, I've removed this task: %s\n", task));
+        sb.append(String.format("Now you have %d tasks in the list.", taskList.size()));
+        return sb.toString();
     }
 
     /**
-     * Prints an error message based on an exception that was thrown.
+     * Formats an error message based on the exception that was thrown.
      *
      * @param e       The exception
      * @param command The command that caused the exception
      */
-    public static void displayErrorMsg(BruException e, Command command) {
-        System.out.println(e.getDisplayMessage(command.toString()));
+    public static String getErrorMsg(BruException e, Command command) {
+        return e.getDisplayMessage(command.toString());
     }
 }

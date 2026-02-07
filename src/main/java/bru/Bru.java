@@ -2,7 +2,6 @@ package bru;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
 import bru.command.Command;
 import bru.command.CommandHandler;
@@ -23,58 +22,53 @@ public class Bru {
     private static final Path SAVE_FILE_PATH = Bru.SAVE_FOLDER_PATH.resolve("bru.txt");
     private static TaskList taskList;
 
-    public static void main(String[] args) {
-        Ui.displayWelcomeMsg(Bru.NAME);
-        Scanner scanner = new Scanner(System.in);
-        boolean isChatting = true;
-
+    /**
+     * Initialises the task list by reading from a save file.
+     */
+    public void initialise() {
         FileHandler.createFolder(Bru.SAVE_FOLDER_PATH);
         FileHandler.createFile(Bru.SAVE_FILE_PATH);
         Bru.taskList = FileHandler.readFromFile(Bru.SAVE_FILE_PATH);
+    }
 
-        while (isChatting) {
-            String input = scanner.nextLine();
-            Pair<Command, String[]> pair = Parser.parseInput(input);
-            Command command = pair.getFirst();
-            String[] parms = pair.getSecond();
-            try {
-                switch (command) {
-                case BYE:
-                    isChatting = false;
-                    break;
-                case LIST:
-                    Ui.displayTaskList(Bru.taskList);
-                    break;
-                case FIND:
-                    CommandHandler.findTask(parms, Bru.taskList);
-                    break;
-                case MARK:
-                    CommandHandler.markTask(parms, true, Bru.taskList);
-                    break;
-                case UNMARK:
-                    CommandHandler.markTask(parms, false, Bru.taskList);
-                    break;
-                case TODO:
-                    CommandHandler.addTodoTask(parms, Bru.taskList);
-                    break;
-                case DEADLINE:
-                    CommandHandler.addDeadlineTask(parms, Bru.taskList);
-                    break;
-                case EVENT:
-                    CommandHandler.addEventTask(parms, Bru.taskList);
-                    break;
-                case DELETE:
-                    CommandHandler.deleteTask(parms, Bru.taskList);
-                    break;
-                default:
-                    throw new UnknownCommandException(input);
-                }
-            } catch (BruException e) {
-                Ui.displayErrorMsg(e, command);
+    /**
+     * Returns a response to a user's command.
+     *
+     * @param input
+     * @return A boolean indicating whether to exit the program, and the response of the chatbot.
+     */
+    public Pair<Boolean, String> getResponse(String input) {
+        Pair<Command, String[]> pair = Parser.parseInput(input);
+        Command command = pair.getFirst();
+        String[] parms = pair.getSecond();
+
+        try {
+            switch (command) {
+            case BYE:
+                return new Pair<>(true, Ui.getGoodbyeMsg());
+            case LIST:
+                return new Pair<>(false, Ui.getTaskList(Bru.taskList));
+            case FIND:
+                return new Pair<>(false, CommandHandler.findTask(parms, Bru.taskList));
+            case MARK:
+                return new Pair<>(false, CommandHandler.markTask(parms, true, Bru.taskList));
+            case UNMARK:
+                return new Pair<>(false, CommandHandler.markTask(parms, false, Bru.taskList));
+            case TODO:
+                return new Pair<>(false, CommandHandler.addTodoTask(parms, Bru.taskList));
+            case DEADLINE:
+                return new Pair<>(false, CommandHandler.addDeadlineTask(parms, Bru.taskList));
+            case EVENT:
+                return new Pair<>(false, CommandHandler.addEventTask(parms, Bru.taskList));
+            case DELETE:
+                return new Pair<>(false, CommandHandler.deleteTask(parms, Bru.taskList));
+            default:
+                throw new UnknownCommandException(input);
             }
+        } catch (BruException e) {
+            return new Pair<>(false, Ui.getErrorMsg(e, command));
+        } finally {
             FileHandler.writeToFile(SAVE_FILE_PATH, Bru.taskList);
         }
-
-        Ui.displayGoodbyeMsg();
     }
 }
