@@ -13,11 +13,10 @@ import javafx.stage.Stage;
  * A GUI for Bru using FXML.
  */
 public class Main extends Application {
-
+    private static final int MIN_HEIGHT = 220;
+    private static final int MIN_WIDTH = 417;
     private Bru bru = new Bru();
     private String mainWindowFxmlPath = "/view/MainWindow.fxml";
-    private final int MIN_HEIGHT = 220;
-    private final int MIN_WIDTH = 417;
 
     @Override
     public void start(Stage stage) {
@@ -26,8 +25,8 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            stage.setMinHeight(this.MIN_HEIGHT);
-            stage.setMinWidth(this.MIN_WIDTH);
+            stage.setMinHeight(Main.MIN_HEIGHT);
+            stage.setMinWidth(Main.MIN_WIDTH);
 
             this.bru.initialise();
             fxmlLoader.<MainWindow>getController().setBru(this.bru); // inject the bru instance

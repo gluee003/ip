@@ -7,9 +7,9 @@ import java.time.format.DateTimeFormatter;
  * The EventTask class represents a task that starts and ends at some given dates/times.
  */
 public class EventTask extends Task {
+    private static final String DATE_TIME_FORMAT_PATTERN = "MMM d yyyy";
     protected LocalDate start;
     protected LocalDate end;
-    private String DATE_TIME_FORMAT_PATTERN = "MMM d yyyy";
 
     /**
      * Instantiates a task with a start and end date.
@@ -35,7 +35,7 @@ public class EventTask extends Task {
     }
 
     private String formatDate(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern(this.DATE_TIME_FORMAT_PATTERN));
+        return date.format(DateTimeFormatter.ofPattern(EventTask.DATE_TIME_FORMAT_PATTERN));
     }
 
     @Override

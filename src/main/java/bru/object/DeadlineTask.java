@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter;
  * The DeadlineTask class represents a task that must be completed by a given date/time.
  */
 public class DeadlineTask extends Task {
+    private static final String DATE_TIME_FORMAT_PATTERN = "MMM d yyyy";
     protected LocalDate deadline;
-    private String DATE_TIME_FORMAT_PATTERN = "MMM d yyyy";
 
     /**
      * Instantiates a task with a deadline.
@@ -32,7 +32,7 @@ public class DeadlineTask extends Task {
     }
 
     private String formatDate(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern(this.DATE_TIME_FORMAT_PATTERN));
+        return date.format(DateTimeFormatter.ofPattern(DeadlineTask.DATE_TIME_FORMAT_PATTERN));
     }
 
     @Override

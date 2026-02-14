@@ -18,6 +18,8 @@ import javafx.util.Duration;
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
+    private static final Duration PAUSE_DURATION = Duration.seconds(2);
+
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -31,8 +33,6 @@ public class MainWindow extends AnchorPane {
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/stare.png"));
     private Image bruImage = new Image(this.getClass().getResourceAsStream("/images/bro.png"));
-
-    private final Duration PAUSE_DURATION = Duration.seconds(2);
 
     /**
      * Says hello at the start of the session.
@@ -74,7 +74,7 @@ public class MainWindow extends AnchorPane {
         this.userInput.clear();
 
         if (isBye) {
-            PauseTransition pause = new PauseTransition(this.PAUSE_DURATION);
+            PauseTransition pause = new PauseTransition(MainWindow.PAUSE_DURATION);
             pause.setOnFinished(e -> Platform.exit());
             pause.play();
         }
