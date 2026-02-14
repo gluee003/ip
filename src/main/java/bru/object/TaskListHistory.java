@@ -19,7 +19,7 @@ public class TaskListHistory {
      * @param taskList
      */
     public void pushToHistory(TaskList taskList) {
-        this.history.push(taskList.copy());
+        this.history.push(taskList);
     }
 
     /**
