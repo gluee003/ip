@@ -88,12 +88,20 @@ public class FileHandler {
     }
 
     /**
+     * Checks if a file exists at a relative path.
+     * @param path The relative path to the file.
+     */
+    public static boolean fileExists(Path path) {
+        return Files.exists(path);
+    }
+
+    /**
      * Creates a folder at the path if it does not exist.
      *
      * @param path The relative path to the folder
      */
     public static void createFolder(Path path) {
-        if (Files.exists(path)) {
+        if (FileHandler.fileExists(path)) {
             return;
         }
         path.toFile().mkdir();
@@ -105,7 +113,7 @@ public class FileHandler {
      * @param path The relative path to the file
      */
     public static void createFile(Path path) {
-        if (Files.exists(path)) {
+        if (FileHandler.fileExists(path)) {
             return;
         }
         try {
