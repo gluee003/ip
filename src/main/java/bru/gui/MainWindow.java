@@ -58,9 +58,15 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = this.userInput.getText();
+
+        assert input != null : "Input is null";
+
         Pair<Boolean, String> pair = this.bru.getResponse(input);
         boolean isBye = pair.getFirst();
         String response = pair.getSecond();
+
+        assert response != null : "Reponse is null";
+
         this.dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, this.userImage),
                 DialogBox.getDukeDialog(response, this.bruImage)

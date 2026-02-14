@@ -28,6 +28,8 @@ public class Bru {
     public void initialise() {
         FileHandler.createFolder(Bru.SAVE_FOLDER_PATH);
         FileHandler.createFile(Bru.SAVE_FILE_PATH);
+        assert FileHandler.fileExists(Bru.SAVE_FILE_PATH)
+                : String.format("Save file at %s does not exist", Bru.SAVE_FILE_PATH);
         Bru.taskList = FileHandler.readFromFile(Bru.SAVE_FILE_PATH);
     }
 
@@ -41,6 +43,10 @@ public class Bru {
         Pair<Command, String[]> pair = Parser.parseInput(input);
         Command command = pair.getFirst();
         String[] parms = pair.getSecond();
+
+        assert Bru.taskList != null : "Task list is null";
+        assert command != null : "Command is null";
+        assert parms != null : "Parameters is null";
 
         try {
             switch (command) {
@@ -68,6 +74,8 @@ public class Bru {
         } catch (BruException e) {
             return new Pair<>(false, Ui.getErrorMsg(e, command));
         } finally {
+            assert FileHandler.fileExists(Bru.SAVE_FILE_PATH)
+                    : String.format("Save file at %s does not exist", Bru.SAVE_FILE_PATH);
             FileHandler.writeToFile(SAVE_FILE_PATH, Bru.taskList);
         }
     }
