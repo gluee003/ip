@@ -48,4 +48,9 @@ public class EventTask extends Task {
     public String[] toRow() {
         return new String[]{"E", this.isDone ? "1" : "0", this.message, this.start.toString(), this.end.toString()};
     }
+
+    @Override
+    public Task copy() {
+        return new EventTask(this.message, this.isDone, this.start, this.end);
+    }
 }

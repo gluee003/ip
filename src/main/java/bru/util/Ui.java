@@ -92,6 +92,14 @@ public class Ui {
         return sb.toString();
     }
 
+    public static String getUndoMessage(TaskList taskList) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Fine bruh. I'll undo your last command.\n");
+        sb.append("Your task list now looks like this:\n");
+        sb.append(taskList.toString());
+        return sb.toString();
+    }
+
     /**
      * Formats an error message based on the exception that was thrown.
      *

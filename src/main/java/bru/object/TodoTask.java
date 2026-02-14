@@ -21,4 +21,9 @@ public class TodoTask extends Task {
     public String[] toRow() {
         return new String[]{"T", this.isDone ? "1" : "0", this.message, "", ""};
     }
+
+    @Override
+    public Task copy() {
+        return new TodoTask(this.message, this.isDone);
+    }
 }

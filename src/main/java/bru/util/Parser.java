@@ -23,26 +23,19 @@ public class Parser {
 
         String cmd = splitInput[0];
         String[] parms = Arrays.copyOfRange(splitInput, 1, splitInput.length);
-        Command command = Command.UNKNOWN;
-        if (cmd.equals("bye")) {
-            command = Command.BYE;
-        } else if (cmd.equals("list")) {
-            command = Command.LIST;
-        } else if (cmd.equals("find")) {
-            command = Command.FIND;
-        } else if (cmd.equals("mark")) {
-            command = Command.MARK;
-        } else if (cmd.equals("unmark")) {
-            command = Command.UNMARK;
-        } else if (cmd.equals("todo")) {
-            command = Command.TODO;
-        } else if (cmd.equals("deadline")) {
-            command = Command.DEADLINE;
-        } else if (cmd.equals("event")) {
-            command = Command.EVENT;
-        } else if (cmd.equals("delete")) {
-            command = Command.DELETE;
-        }
+        Command command = switch (cmd) {
+            case "bye" -> Command.BYE;
+            case "list" -> Command.LIST;
+            case "find" -> Command.FIND;
+            case "mark" -> Command.MARK;
+            case "unmark" -> Command.UNMARK;
+            case "todo" -> Command.TODO;
+            case "deadline" -> Command.DEADLINE;
+            case "event" -> Command.EVENT;
+            case "delete" -> Command.DELETE;
+            case "undo" -> Command.UNDO;
+            default -> Command.UNKNOWN;
+        };
 
         return new Pair<>(command, parms);
     }

@@ -44,4 +44,9 @@ public class DeadlineTask extends Task {
     public String[] toRow() {
         return new String[]{"D", this.isDone ? "1" : "0", this.message, this.deadline.toString(), ""};
     }
+
+    @Override
+    public Task copy() {
+        return new DeadlineTask(this.message, this.isDone, this.deadline);
+    }
 }

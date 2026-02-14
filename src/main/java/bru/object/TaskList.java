@@ -112,4 +112,18 @@ public class TaskList {
                 .map(task -> String.join("|", task.toRow()))
                 .toList();
     }
+
+    /**
+     * Returns a deep copy of the task list instance.
+     *
+     * @return A deep copy of the task list instance.
+     */
+    public TaskList copy() {
+        TaskList newList = new TaskList();
+        this.tasks.stream()
+                .map(task -> task.copy())
+                .forEach(task -> newList.addTask(task));
+
+        return newList;
+    }
 }

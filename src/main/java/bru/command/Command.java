@@ -12,6 +12,7 @@ public enum Command {
     FIND("find"),
     MARK("mark"),
     UNMARK("unmark"),
+    UNDO("undo"),
     BYE("bye"),
     UNKNOWN("unknown");
 

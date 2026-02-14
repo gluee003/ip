@@ -43,6 +43,13 @@ public abstract class Task {
      */
     public abstract String[] toRow();
 
+    /**
+     * Returns a deep copy of the task instance.
+     *
+     * @return A copy of the task instance.
+     */
+    public abstract Task copy();
+
     @Override
     public String toString() {
         return String.format("[%s][%s] %s", this.getTaskType(), this.getCheckmark(), this.message);

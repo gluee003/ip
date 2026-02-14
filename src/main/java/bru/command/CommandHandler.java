@@ -144,9 +144,9 @@ public class CommandHandler {
         boolean isEndNotLast = endPosition != parmsLength - 1;
         boolean isEndValid = isEndFound && isEndNotFirst && isEndNotLast;
 
-        boolean isNotEmptyBetween = endPosition - startPosition > 0;
+        boolean isNotInverted = endPosition > startPosition;
 
-        return isStartValid && isEndValid && isNotEmptyBetween;
+        return isStartValid && isEndValid && isNotInverted;
     }
 
     /**
@@ -161,7 +161,7 @@ public class CommandHandler {
         }
         int startPosition = Utils.findInArr(parms, CommandHandler.EVENT_START_DELIMITER);
         int endPosition = Utils.findInArr(parms, CommandHandler.EVENT_END_DELIMITER);
-        if (CommandHandler.isValidEventDelimiter(startPosition, endPosition, parms.length)) {
+        if (!CommandHandler.isValidEventDelimiter(startPosition, endPosition, parms.length)) {
             throw new InvalidParmsException(String.join(" ", parms));
         }
         String msg = String.join(" ",
