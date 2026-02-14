@@ -46,14 +46,9 @@ public class Ui {
      */
     public static String getFilteredTaskList(ArrayList<Pair<Integer, Task>> tasks) {
         String successMsg = "Okay bruh, here are the matching tasks in your list:\n";
-        StringBuilder sb = new StringBuilder();
-        sb.append(successMsg);
-
-        for (Pair<Integer, Task> p : tasks) {
-            sb.append(String.format("%d. %s\n", p.getFirst(), p.getSecond()));
-        }
-
-        return sb.toString();
+        return tasks.stream()
+                .map(p -> String.format("%d. %s\n", p.getFirst(), p.getSecond()))
+                .reduce(successMsg, (acc, s) -> acc + s);
     }
 
     /**
