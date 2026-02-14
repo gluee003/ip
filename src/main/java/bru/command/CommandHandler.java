@@ -22,6 +22,10 @@ import bru.util.Utils;
  * The CommandHandler handles the logic of running user commands.
  */
 public class CommandHandler {
+    private static final String DEADLINE_DELIMITER = "/by";
+    private static final String EVENT_START_DELIMITER = "/from";
+    private static final String EVENT_END_DELIMITER = "/to";
+
     /**
      * Finds tasks whose description matches a user specified pattern.
      *
@@ -94,6 +98,13 @@ public class CommandHandler {
         return CommandHandler.addTask(task, taskList);
     }
 
+    private static boolean isValidDeadlineDelimiter(int delimiterPosition, int parmsLength) {
+        boolean isFound = delimiterPosition != -1;
+        boolean isNotFirst = delimiterPosition != 0;
+        boolean isNotLast = delimiterPosition != parmsLength - 1;
+        return isFound && isNotFirst && isNotLast;
+    }
+
     /**
      * Adds a deadline task to the task list
      *
@@ -104,9 +115,8 @@ public class CommandHandler {
         if (parms.length == 0) {
             throw new EmptyParmsException(String.join(" ", parms));
         }
-        int delimiterPosition = Utils.findInArr(parms, "/by");
-        if (delimiterPosition == -1 || delimiterPosition == 0
-                || delimiterPosition == parms.length - 1) {
+        int delimiterPosition = Utils.findInArr(parms, CommandHandler.DEADLINE_DELIMITER);
+        if (!CommandHandler.isValidDeadlineDelimiter(delimiterPosition, parms.length)) {
             throw new InvalidParmsException(String.join(" ", parms));
         }
         String msg = String.join(" ",
@@ -123,6 +133,22 @@ public class CommandHandler {
         }
     }
 
+    private static boolean isValidEventDelimiter(int startPosition, int endPosition, int parmsLength) {
+        boolean isStartFound = startPosition != -1;
+        boolean isStartNotFirst = startPosition != 0;
+        boolean isStartNotLast = startPosition != parmsLength - 1;
+        boolean isStartValid = isStartFound && isStartNotFirst && isStartNotLast;
+
+        boolean isEndFound = endPosition != -1;
+        boolean isEndNotFirst = endPosition != 0;
+        boolean isEndNotLast = endPosition != parmsLength - 1;
+        boolean isEndValid = isEndFound && isEndNotFirst && isEndNotLast;
+
+        boolean isNotEmptyBetween = endPosition - startPosition > 0;
+
+        return isStartValid && isEndValid && isNotEmptyBetween;
+    }
+
     /**
      * Adds a event task to the task list
      *
@@ -133,12 +159,9 @@ public class CommandHandler {
         if (parms.length == 0) {
             throw new EmptyParmsException(String.join(" ", parms));
         }
-        int startPosition = Utils.findInArr(parms, "/from");
-        int endPosition = Utils.findInArr(parms, "/to");
-        if (startPosition == -1 || endPosition == -1 || startPosition >= endPosition
-                || startPosition == 0 || startPosition == parms.length - 1
-                || endPosition == 0 || endPosition == parms.length - 1
-                || startPosition + 1 == endPosition) {
+        int startPosition = Utils.findInArr(parms, CommandHandler.EVENT_START_DELIMITER);
+        int endPosition = Utils.findInArr(parms, CommandHandler.EVENT_END_DELIMITER);
+        if (CommandHandler.isValidEventDelimiter(startPosition, endPosition, parms.length)) {
             throw new InvalidParmsException(String.join(" ", parms));
         }
         String msg = String.join(" ",

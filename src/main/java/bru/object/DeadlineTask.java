@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class DeadlineTask extends Task {
     protected LocalDate deadline;
+    private String DATE_TIME_FORMAT_PATTERN = "MMM d yyyy";
 
     /**
      * Instantiates a task with a deadline.
@@ -31,7 +32,7 @@ public class DeadlineTask extends Task {
     }
 
     private String formatDate(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        return date.format(DateTimeFormatter.ofPattern(this.DATE_TIME_FORMAT_PATTERN));
     }
 
     @Override

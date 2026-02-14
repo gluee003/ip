@@ -32,6 +32,8 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/stare.png"));
     private Image bruImage = new Image(this.getClass().getResourceAsStream("/images/bro.png"));
 
+    private final Duration PAUSE_DURATION = Duration.seconds(2);
+
     /**
      * Says hello at the start of the session.
      */
@@ -64,8 +66,9 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getDukeDialog(response, this.bruImage)
         );
         this.userInput.clear();
+
         if (isBye) {
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            PauseTransition pause = new PauseTransition(this.PAUSE_DURATION);
             pause.setOnFinished(e -> Platform.exit());
             pause.play();
         }
