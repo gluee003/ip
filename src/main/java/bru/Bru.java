@@ -40,8 +40,8 @@ public class Bru {
         Bru.taskList = Bru.taskListHistory.popFromHistory();
     }
 
-    private void recordHistory() {
-        Bru.taskListHistory.pushToHistory(Bru.taskList);
+    private void recordHistory(TaskList taskList) {
+        Bru.taskListHistory.pushToHistory(taskList);
     }
 
     /**
@@ -67,24 +67,42 @@ public class Bru {
                 return new Pair<>(false, Ui.getTaskList(Bru.taskList));
             case FIND:
                 return new Pair<>(false, CommandHandler.findTask(parms, Bru.taskList));
-            case MARK:
-                this.recordHistory();
-                return new Pair<>(false, CommandHandler.markTask(parms, true, Bru.taskList));
-            case UNMARK:
-                this.recordHistory();
-                return new Pair<>(false, CommandHandler.markTask(parms, false, Bru.taskList));
-            case TODO:
-                this.recordHistory();
-                return new Pair<>(false, CommandHandler.addTodoTask(parms, Bru.taskList));
-            case DEADLINE:
-                this.recordHistory();
-                return new Pair<>(false, CommandHandler.addDeadlineTask(parms, Bru.taskList));
-            case EVENT:
-                this.recordHistory();
-                return new Pair<>(false, CommandHandler.addEventTask(parms, Bru.taskList));
-            case DELETE:
-                this.recordHistory();
-                return new Pair<>(false, CommandHandler.deleteTask(parms, Bru.taskList));
+            case MARK: {
+                TaskList prevTaskList = Bru.taskList.copy();
+                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.markTask(parms, true, Bru.taskList));
+                this.recordHistory(prevTaskList);
+                return p;
+            }
+            case UNMARK: {
+                TaskList prevTaskList = Bru.taskList.copy();
+                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.markTask(parms, false, Bru.taskList));
+                this.recordHistory(prevTaskList);
+                return p;
+            }
+            case TODO: {
+                TaskList prevTaskList = Bru.taskList.copy();
+                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.addTodoTask(parms, Bru.taskList));
+                this.recordHistory(prevTaskList);
+                return p;
+            }
+            case DEADLINE: {
+                TaskList prevTaskList = Bru.taskList.copy();
+                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.addDeadlineTask(parms, Bru.taskList));
+                this.recordHistory(prevTaskList);
+                return p;
+            }
+            case EVENT: {
+                TaskList prevTaskList = Bru.taskList.copy();
+                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.addEventTask(parms, Bru.taskList));
+                this.recordHistory(prevTaskList);
+                return p;
+            }
+            case DELETE: {
+                TaskList prevTaskList = Bru.taskList.copy();
+                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.deleteTask(parms, Bru.taskList));
+                this.recordHistory(prevTaskList);
+                return p;
+            }
             case UNDO:
                 this.undo();
                 return new Pair<>(false, Ui.getUndoMessage(Bru.taskList));
