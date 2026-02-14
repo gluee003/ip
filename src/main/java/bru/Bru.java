@@ -8,6 +8,7 @@ import bru.command.CommandHandler;
 import bru.exception.BruException;
 import bru.exception.UnknownCommandException;
 import bru.object.TaskList;
+import bru.object.TaskListHistory;
 import bru.util.FileHandler;
 import bru.util.Pair;
 import bru.util.Parser;
@@ -21,6 +22,7 @@ public class Bru {
     private static final Path SAVE_FOLDER_PATH = Paths.get("data");
     private static final Path SAVE_FILE_PATH = Bru.SAVE_FOLDER_PATH.resolve("bru.txt");
     private static TaskList taskList;
+    private static TaskListHistory taskListHistory;
 
     /**
      * Initialises the task list by reading from a save file.
@@ -31,6 +33,15 @@ public class Bru {
         assert FileHandler.fileExists(Bru.SAVE_FILE_PATH)
                 : String.format("Save file at %s does not exist", Bru.SAVE_FILE_PATH);
         Bru.taskList = FileHandler.readFromFile(Bru.SAVE_FILE_PATH);
+        Bru.taskListHistory = new TaskListHistory();
+    }
+
+    private void undo() {
+        Bru.taskList = Bru.taskListHistory.popFromHistory();
+    }
+
+    private void recordHistory() {
+        Bru.taskListHistory.pushToHistory(Bru.taskList);
     }
 
     /**
@@ -57,17 +68,26 @@ public class Bru {
             case FIND:
                 return new Pair<>(false, CommandHandler.findTask(parms, Bru.taskList));
             case MARK:
+                this.recordHistory();
                 return new Pair<>(false, CommandHandler.markTask(parms, true, Bru.taskList));
             case UNMARK:
+                this.recordHistory();
                 return new Pair<>(false, CommandHandler.markTask(parms, false, Bru.taskList));
             case TODO:
+                this.recordHistory();
                 return new Pair<>(false, CommandHandler.addTodoTask(parms, Bru.taskList));
             case DEADLINE:
+                this.recordHistory();
                 return new Pair<>(false, CommandHandler.addDeadlineTask(parms, Bru.taskList));
             case EVENT:
+                this.recordHistory();
                 return new Pair<>(false, CommandHandler.addEventTask(parms, Bru.taskList));
             case DELETE:
+                this.recordHistory();
                 return new Pair<>(false, CommandHandler.deleteTask(parms, Bru.taskList));
+            case UNDO:
+                this.undo();
+                return new Pair<>(false, Ui.getUndoMessage(Bru.taskList));
             default:
                 throw new UnknownCommandException(input);
             }
