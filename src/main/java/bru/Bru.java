@@ -37,8 +37,10 @@ public class Bru {
         Bru.taskListHistory = new TaskListHistory();
     }
 
-    private void undo() {
+    private TaskList undo() {
+        TaskList currentTaskList = Bru.taskList;
         Bru.taskList = Bru.taskListHistory.popFromHistory();
+        return currentTaskList;
     }
 
     private void recordHistory(TaskList taskList) {
@@ -65,7 +67,7 @@ public class Bru {
             case BYE:
                 return new Result(true, Ui.getGoodbyeMsg());
             case LIST:
-                return new Result(Ui.getTaskList(Bru.taskList));
+                return new Result(CommandHandler.getTaskList(Bru.taskList));
             case FIND:
                 return new Result(CommandHandler.findTask(parms, Bru.taskList));
             case MARK: {
@@ -105,8 +107,8 @@ public class Bru {
                 return result;
             }
             case UNDO:
-                this.undo();
-                return new Result(Ui.getUndoMessage(Bru.taskList));
+                TaskList beforeTaskList = this.undo();
+                return new Result(Ui.getUndoMessage(beforeTaskList, Bru.taskList));
             default:
                 throw new UnknownCommandException(input);
             }

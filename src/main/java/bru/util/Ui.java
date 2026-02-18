@@ -98,11 +98,14 @@ public class Ui {
         return sb.toString();
     }
 
-    public static String getUndoMessage(TaskList taskList) {
+    public static String getUndoMessage(TaskList beforeTaskList, TaskList afterTaskList) {
         StringBuilder sb = new StringBuilder();
         sb.append("Fine bruh. I'll undo your last command.\n");
+        sb.append("Affected tasks:\n");
+        sb.append(beforeTaskList.difference(afterTaskList).toString());
+        sb.append("\n");
         sb.append("Your task list now looks like this:\n");
-        sb.append(taskList.toString());
+        sb.append(afterTaskList.toString());
         return sb.toString();
     }
 
