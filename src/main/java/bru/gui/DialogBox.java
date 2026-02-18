@@ -19,6 +19,8 @@ import javafx.scene.layout.HBox;
  * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
+    private static final String ERROR_LABEL = "error-label";
+
     @FXML
     private Label dialog;
     @FXML
@@ -53,9 +55,12 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
+    public static DialogBox getDukeDialog(String text, Image img, boolean isError) {
         DialogBox db = new DialogBox(text, img);
         db.flip();
+        if (isError) {
+            db.dialog.getStyleClass().add(DialogBox.ERROR_LABEL);
+        }
         return db;
     }
 }

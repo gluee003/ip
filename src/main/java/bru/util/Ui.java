@@ -12,6 +12,12 @@ import bru.object.TaskList;
  */
 public class Ui {
     /**
+     * Formats a prompt text for a text field.
+     */
+    public static String getPromptText() {
+        return "Enter command here";
+    }
+    /**
      * Formats a welcome message, introducing the chatbot's name.
      *
      * @param name The chatbot's name

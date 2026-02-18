@@ -6,6 +6,7 @@ import bru.Bru;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -17,6 +18,7 @@ public class Main extends Application {
     private static final int MIN_WIDTH = 417;
     private Bru bru = new Bru();
     private String mainWindowFxmlPath = "/view/MainWindow.fxml";
+    private String iconPath = "/images/bro.png";
 
     @Override
     public void start(Stage stage) {
@@ -27,6 +29,10 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setMinHeight(Main.MIN_HEIGHT);
             stage.setMinWidth(Main.MIN_WIDTH);
+
+            stage.setTitle(Bru.NAME);
+            Image icon = new Image(this.iconPath);
+            stage.getIcons().add(icon);
 
             this.bru.initialise();
             fxmlLoader.<MainWindow>getController().setBru(this.bru); // inject the bru instance

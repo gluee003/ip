@@ -1,7 +1,7 @@
 package bru.gui;
 
 import bru.Bru;
-import bru.util.Pair;
+import bru.command.Result;
 import bru.util.Ui;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -41,7 +41,8 @@ public class MainWindow extends AnchorPane {
     public void initialize() {
         this.scrollPane.vvalueProperty().bind(this.dialogContainer.heightProperty());
         this.dialogContainer.getChildren()
-                .addAll(DialogBox.getDukeDialog(Ui.getWelcomeMsg(Bru.NAME), this.bruImage));
+                .addAll(DialogBox.getDukeDialog(Ui.getWelcomeMsg(Bru.NAME), this.bruImage, false));
+        this.userInput.setPromptText(Ui.getPromptText());
     }
 
     /**
@@ -61,15 +62,16 @@ public class MainWindow extends AnchorPane {
 
         assert input != null : "Input is null";
 
-        Pair<Boolean, String> pair = this.bru.getResponse(input);
-        boolean isBye = pair.getFirst();
-        String response = pair.getSecond();
+        Result result = this.bru.getResponse(input);
+        boolean isBye = result.getIsBye();
+        boolean isError = result.getIsError();
+        String response = result.getResponse();
 
-        assert response != null : "Reponse is null";
+        assert response != null : "Response is null";
 
         this.dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, this.userImage),
-                DialogBox.getDukeDialog(response, this.bruImage)
+                DialogBox.getDukeDialog(response, this.bruImage, isError)
         );
         this.userInput.clear();
 
