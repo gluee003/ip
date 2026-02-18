@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 
 import bru.command.Command;
 import bru.command.CommandHandler;
+import bru.command.Result;
 import bru.exception.BruException;
 import bru.exception.UnknownCommandException;
 import bru.object.TaskList;
@@ -50,7 +51,7 @@ public class Bru {
      * @param input
      * @return A boolean indicating whether to exit the program, and the response of the chatbot.
      */
-    public Pair<Boolean, String> getResponse(String input) {
+    public Result getResponse(String input) {
         Pair<Command, String[]> pair = Parser.parseInput(input);
         Command command = pair.getFirst();
         String[] parms = pair.getSecond();
@@ -62,55 +63,55 @@ public class Bru {
         try {
             switch (command) {
             case BYE:
-                return new Pair<>(true, Ui.getGoodbyeMsg());
+                return new Result(true, Ui.getGoodbyeMsg());
             case LIST:
-                return new Pair<>(false, Ui.getTaskList(Bru.taskList));
+                return new Result(Ui.getTaskList(Bru.taskList));
             case FIND:
-                return new Pair<>(false, CommandHandler.findTask(parms, Bru.taskList));
+                return new Result(CommandHandler.findTask(parms, Bru.taskList));
             case MARK: {
                 TaskList prevTaskList = Bru.taskList.copy();
-                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.markTask(parms, true, Bru.taskList));
+                Result result = new Result(CommandHandler.markTask(parms, true, Bru.taskList));
                 this.recordHistory(prevTaskList);
-                return p;
+                return result;
             }
             case UNMARK: {
                 TaskList prevTaskList = Bru.taskList.copy();
-                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.markTask(parms, false, Bru.taskList));
+                Result result = new Result(CommandHandler.markTask(parms, false, Bru.taskList));
                 this.recordHistory(prevTaskList);
-                return p;
+                return result;
             }
             case TODO: {
                 TaskList prevTaskList = Bru.taskList.copy();
-                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.addTodoTask(parms, Bru.taskList));
+                Result result = new Result(CommandHandler.addTodoTask(parms, Bru.taskList));
                 this.recordHistory(prevTaskList);
-                return p;
+                return result;
             }
             case DEADLINE: {
                 TaskList prevTaskList = Bru.taskList.copy();
-                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.addDeadlineTask(parms, Bru.taskList));
+                Result result = new Result(CommandHandler.addDeadlineTask(parms, Bru.taskList));
                 this.recordHistory(prevTaskList);
-                return p;
+                return result;
             }
             case EVENT: {
                 TaskList prevTaskList = Bru.taskList.copy();
-                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.addEventTask(parms, Bru.taskList));
+                Result result = new Result(CommandHandler.addEventTask(parms, Bru.taskList));
                 this.recordHistory(prevTaskList);
-                return p;
+                return result;
             }
             case DELETE: {
                 TaskList prevTaskList = Bru.taskList.copy();
-                Pair<Boolean, String> p = new Pair<>(false, CommandHandler.deleteTask(parms, Bru.taskList));
+                Result result = new Result(CommandHandler.deleteTask(parms, Bru.taskList));
                 this.recordHistory(prevTaskList);
-                return p;
+                return result;
             }
             case UNDO:
                 this.undo();
-                return new Pair<>(false, Ui.getUndoMessage(Bru.taskList));
+                return new Result(Ui.getUndoMessage(Bru.taskList));
             default:
                 throw new UnknownCommandException(input);
             }
         } catch (BruException e) {
-            return new Pair<>(false, Ui.getErrorMsg(e, command));
+            return new Result(false, true, Ui.getErrorMsg(e, command));
         } finally {
             assert FileHandler.fileExists(Bru.SAVE_FILE_PATH)
                     : String.format("Save file at %s does not exist", Bru.SAVE_FILE_PATH);
