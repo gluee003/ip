@@ -5,6 +5,7 @@
 Bru is a desktop app for tracking tasks. You can add, mark, and delete tasks, and also undo any mistakes along the way.
 
 ## Command Summary
+
 | Command  | Format                              | Example                                                         |
 |----------|-------------------------------------|-----------------------------------------------------------------|
 | Todo     | `todo TASK`                         | `todo CS2101 reading`                                           |

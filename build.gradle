@@ -53,7 +53,7 @@ application {
 
 shadowJar {
     archiveBaseName = "bru"
-    archiveVersion = "v0.1"
+    archiveVersion = "v0.2"
     archiveClassifier = null
 }
 
