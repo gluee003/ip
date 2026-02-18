@@ -41,6 +41,14 @@ public class DeadlineTask extends Task {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o instanceof DeadlineTask task) {
+            return (super.equals(task) && this.deadline.equals(task.deadline));
+        }
+        return false;
+    }
+
+    @Override
     public String[] toRow() {
         return new String[]{"D", this.isDone ? "1" : "0", this.message, this.deadline.toString(), ""};
     }

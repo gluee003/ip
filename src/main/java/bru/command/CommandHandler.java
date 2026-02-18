@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import bru.exception.EmptyParmsException;
+import bru.exception.EmptyTaskListException;
 import bru.exception.InvalidDateException;
 import bru.exception.InvalidParmsException;
 import bru.exception.TaskNotFoundException;
@@ -25,6 +26,13 @@ public class CommandHandler {
     private static final String DEADLINE_DELIMITER = "/by";
     private static final String EVENT_START_DELIMITER = "/from";
     private static final String EVENT_END_DELIMITER = "/to";
+
+    public static String getTaskList(TaskList taskList) {
+        if (taskList.size() <= 0) {
+            throw new EmptyTaskListException(taskList.toString());
+        }
+        return Ui.getTaskList(taskList);
+    }
 
     /**
      * Finds tasks whose description matches a user specified pattern.
@@ -173,6 +181,9 @@ public class CommandHandler {
         try {
             LocalDate start = LocalDate.parse(startStr);
             LocalDate end = LocalDate.parse(endStr);
+            if (start.isAfter(end)) {
+                throw new InvalidDateException(start + " " + end);
+            }
             Task task = new EventTask(msg, start, end);
             return CommandHandler.addTask(task, taskList);
         } catch (DateTimeParseException e) {

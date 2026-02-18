@@ -2,6 +2,7 @@ package bru.object;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import bru.util.Pair;
 
@@ -13,6 +14,17 @@ public class TaskList {
 
     public TaskList() {
         this.tasks = new ArrayList<Task>();
+    }
+
+    /**
+     * Returns an instance of a task list filled with tasks from an array list.
+     *
+     * @param arrayList The arraylist of tasks.
+     */
+    public static TaskList of(ArrayList<Task> arrayList) {
+        TaskList taskList = new TaskList();
+        taskList.tasks = arrayList;
+        return taskList;
     }
 
     public int size() {
@@ -125,5 +137,18 @@ public class TaskList {
                 .forEach(task -> newList.addTask(task));
 
         return newList;
+    }
+
+    /**
+     * Returns tasks in this task lists that are not in the given task list.
+     *
+     * @param otherTaskList The given task list.
+     * @return A task list containing tasks in this task lists that are not in the given task list.
+     */
+    public TaskList difference(TaskList otherTaskList) {
+        return TaskList.of(this.tasks.stream()
+                .filter(task -> otherTaskList.tasks.stream()
+                        .noneMatch(otherTask -> task.equals(otherTask)))
+                .collect(Collectors.toCollection(() -> new ArrayList<>())));
     }
 }

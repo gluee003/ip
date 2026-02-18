@@ -45,6 +45,14 @@ public class EventTask extends Task {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o instanceof EventTask task) {
+            return (super.equals(task) && this.start.equals(task.start) && this.end.equals(task.end));
+        }
+        return false;
+    }
+
+    @Override
     public String[] toRow() {
         return new String[]{"E", this.isDone ? "1" : "0", this.message, this.start.toString(), this.end.toString()};
     }

@@ -54,4 +54,12 @@ public abstract class Task {
     public String toString() {
         return String.format("[%s][%s] %s", this.getTaskType(), this.getCheckmark(), this.message);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Task task) {
+            return (this.message.equals(task.message) && this.isDone == task.isDone);
+        }
+        return false;
+    }
 }
