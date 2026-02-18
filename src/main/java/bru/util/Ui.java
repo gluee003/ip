@@ -102,8 +102,12 @@ public class Ui {
         StringBuilder sb = new StringBuilder();
         sb.append("Fine bruh. I'll undo your last command.\n");
         sb.append("Affected tasks:\n");
-        sb.append(beforeTaskList.difference(afterTaskList).toString());
-        sb.append("\n");
+
+        TaskList differenceList = beforeTaskList.difference(afterTaskList);
+        if (differenceList.size() == 0) {
+            differenceList = afterTaskList.difference(beforeTaskList);
+        }
+        sb.append(differenceList + "\n");
         sb.append("Your task list now looks like this:\n");
         sb.append(afterTaskList.toString());
         return sb.toString();
